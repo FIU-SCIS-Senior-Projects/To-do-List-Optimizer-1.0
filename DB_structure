@@ -1,0 +1,22 @@
+User:{
+	Name:String,
+	email:String,
+	pass:String,
+	phone:String,
+	list_categories:{
+		Name:String,
+		places:{
+			name: String,
+			task:{
+				name:String,
+				time:DateTime,
+				completed:bool
+				}
+			location:{
+				Longitude:double
+				Latitude:double	
+				}
+			}
+		}
+
+}
