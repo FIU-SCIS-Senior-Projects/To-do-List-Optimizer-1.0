@@ -1,5 +1,5 @@
 
-decode(t) {
+function decode(t) {
   for (var n, o, u = 0, l = 0, r = 0, d = [], h = 0, i = 0, a = null, c = Math.pow(10, 5); u < t.length;) {
     a = null,
     h = 0,
@@ -32,9 +32,9 @@ decode(t) {
   })
 }
 
-_route(current, places, destination, optimize) {
+function _route(current, places, destination, optimize) {
   var answer = {};
-  const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${current.latitude},${current.longitude}&destination=${destination.latitude},${destination.longitude}&waypoints=optimize:${optimize? `true`: `false`}`;
+  var url = `https://maps.googleapis.com/maps/api/directions/json?origin=${current.latitude},${current.longitude}&destination=${destination.latitude},${destination.longitude}&waypoints=optimize:${optimize? `true`: `false`}`;
   var query = '';
 
   places.map((place,id) => {query += `|${place.latitude},${place.longitude}`});
@@ -66,7 +66,7 @@ _route(current, places, destination, optimize) {
 
 }
 
-export fucntion getRoute(current, places, destination, optimize){
+export function getRoute(current, places, destination, optimize){
   respponse = _route(current, places, destination, optimize);
 
   return response;
