@@ -78,9 +78,7 @@ class MapForm extends Component {
         h += 5;
       while (a >= 32);
 
-      n = 1 & i
-        ? ~ (i >> 1)
-        : i >> 1,
+      n = 1 & i ? ~ (i >> 1) : i >> 1,
       h = i = 0;
 
       do
@@ -89,9 +87,7 @@ class MapForm extends Component {
         h += 5;
       while (a >= 32);
 
-      o = 1 & i
-        ? ~ (i >> 1)
-        : i >> 1,
+      o = 1 & i ? ~ (i >> 1) : i >> 1,
       l += n,
       r += o,
       d.push([
@@ -105,7 +101,7 @@ class MapForm extends Component {
   }
 
   route() {
-    const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${this.state.user.latitude},${this.state.user.longitude}&destination=Hialeah,FL&waypoints=optimize:true|Broward,FL|Hollywood,FL&key=AIzaSyCq3vcvjUUk1yJKLVmE31K-0YRaQptm61Q`;
+    const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${this.state.user.latitude},${this.state.user.longitude}&destination=Hialeah,FL&waypoints=optimize:true|Broward,FL|Hollywood,FL`;
 
     fetch(url).then(response => response.json()).then(responseJson => {
       if (responseJson.routes.length) {
