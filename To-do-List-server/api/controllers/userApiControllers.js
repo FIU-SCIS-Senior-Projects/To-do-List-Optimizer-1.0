@@ -46,7 +46,7 @@ exports.search_user = (req, res) => {
 =======================================*/
 exports.update_a_user = (req, res) => {
     var userId = {_id:req.params.userId}
-    User.findOneAndUpdate({userI}, req.body, {new:true}, (err, user)=>{
+    User.findOneAndUpdate({userId}, req.body, {new:true}, (err, user)=>{
         if(err)
             res.send(err)
         res.json(user);
@@ -62,5 +62,4 @@ exports.delete_user = (req, res) => {
         res.json({message:"user deleted"});
     })
 }
-
 /*========================================================================*/

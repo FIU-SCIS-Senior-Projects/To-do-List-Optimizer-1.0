@@ -1,7 +1,8 @@
 'use strict'
 
 module.exports = function(app){
-    var user = require('../controllers/userApiControllers');
+    var user  = require('../controllers/userApiControllers');
+    var place = require('../controllers/placeApiControllers');
 
     app.route('/user/add')
         .post(user.add_a_user);
@@ -14,6 +15,7 @@ module.exports = function(app){
     app.route('/user/search/:userId')
         .get(user.search_user);
 
-    // app.route('/task')
-    //     .post(user.add_task)
+
+    app.route('/:userId/place/add')
+        .post(place.add_place);
 };
