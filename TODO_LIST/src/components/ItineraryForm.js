@@ -7,10 +7,13 @@ import {
   Dimensions,
   TouchableOpacity,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  ListView,
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
+
+import {getRoute} from '../API/google'
 
 import Place from './Place';
 
@@ -21,9 +24,11 @@ class ItineraryForm extends Component{
     this.getPlaces = this.getPlaces.bind(this);
   }
   render(){
-    console.log(this.props.route);
     return(
-      <View>
+      <View style={styles.container}>
+        {/* <ListView>
+
+        </ListView> */}
         <ScrollView>
           {this.getPlaces()}
         </ScrollView>
@@ -46,14 +51,19 @@ class ItineraryForm extends Component{
 
   getPlaces(){
     let {places} =  this.props.route;
-
-    return Object.keys(places).map((id, i) => {
-      return(<Place key={i} name={places[id].name} location={places[id].location} />);
+    console.log(places)
+    return places.map((place, i) => {
+      return(<Place key={i} name={place.name} location={place.location} />);
     })
   }
 }
 
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 ItineraryForm.propTypes = {
   route: PropTypes.object.isRequired,

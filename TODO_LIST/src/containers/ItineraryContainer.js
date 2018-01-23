@@ -15,29 +15,29 @@ class ItineraryContainer extends Component{
     this.state = {
       route: {
         order: [0,1,2],
-        places:{
-          1:{
-            name: 'Place 1',
+        places:[
+          {
+            name: 'Third Street South',
             location:{
-              latitude: 1,
-              longitude: 2,
+              latitude: 26.1359886,
+              longitude: -81.8024236,
             }
           },
-          2:{
-            name: 'Place 2',
+          {
+            name: 'Tin City Shops',
             location:{
-              latitude: 1,
-              longitude: 2,
+              latitude: 26.141244,
+              longitude: -81.79052660000002,
             }
           },
-          3:{
-            name: 'Place 3',
+          {
+            name: 'The Shelter Options Shoppe',
             location:{
-              latitude: 2,
-              longitude: 3,
+              latitude: 26.1495793,
+              longitude: -81.79478670000003,
             }
           }
-        }
+        ]
       }
     }
   }

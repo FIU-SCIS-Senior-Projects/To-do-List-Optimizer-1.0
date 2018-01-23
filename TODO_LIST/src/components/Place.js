@@ -6,6 +6,7 @@ import {
   TextInput,
   Dimensions,
   TouchableOpacity,
+  Image,
   StyleSheet
 } from 'react-native';
 
@@ -17,14 +18,35 @@ class Place extends Component{
   render(){
     let { name, coordinates } = this.props;
     return(
-      <View>
-        <Text>
-          {name}
-        </Text>
+      <View style={styles.container}>
+        <Image source={ require('../assets/icons/map-marker.png')} style={styles.photo} />
+        <TouchableOpacity>
+          <Text style={styles.text}>
+            {name}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  text: {
+    marginLeft: 12,
+    fontSize: 16,
+  },
+  photo: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+  },
+});
 
 Place.defaultProps = {
   name: '',
