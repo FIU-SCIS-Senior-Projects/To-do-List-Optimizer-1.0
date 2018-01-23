@@ -8,9 +8,7 @@ class LoginScene extends Component {
 
   render() {
     return (<View>
-      <Text>
-        Login Scene Here
-      </Text>
+      
       {/* <WelcomeContainer /> */}
       <TouchableOpacity
           onPress={() => {
