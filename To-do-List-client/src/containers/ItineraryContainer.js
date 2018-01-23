@@ -37,13 +37,19 @@ class ItineraryContainer extends Component{
               longitude: -81.79478670000003,
             }
           }
-        ]
+        ],
+        destination: {
+          name: 'The Bike Route',
+          location: {
+            latitude: 26.155014,
+            longitude: -81.79703999999998,
+          }
+        }
       }
     }
   }
 
   render(){
-    console.log(this.state.route);
     return(
       <ItineraryForm route={this.state.route}/>
     );

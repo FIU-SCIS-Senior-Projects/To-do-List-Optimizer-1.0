@@ -6,6 +6,7 @@ import {Actions} from 'react-native-router-flux';
 
 import ItineraryContainer from '../containers/ItineraryContainer';
 
+/** Defines the general layout of the Itinerary scene*/
 class ItineraryScene extends Component {
   constructor(props){
     super(props)
