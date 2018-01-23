@@ -1,8 +1,8 @@
 'use strict'
 
 var mongoose = require('mongoose'),
-     User = mongoose.model('User');
-     //Task = mongoose.model('Task')
+     User    = mongoose.model('User'),
+     Place   = mongoose.model('Place');
 
 /*=======================================
 * POST: Adds a new user
@@ -35,7 +35,7 @@ exports.list_all_users = (req, res) => {
 * GET: Returns certain User
 =======================================*/
 exports.search_user = (req, res) => {
-    User.findById(req.params.userId, (err, user)=>{
+    User.findById(req.params.userId, (err, user) => {
         if(err)
             res.send(err)
         res.json(user);
@@ -54,12 +54,16 @@ exports.update_a_user = (req, res) => {
 };
 /*=======================================
 *POST:Delete a user
+
 =======================================*/
 exports.delete_user = (req, res) => {
     User.remove({_id:req.params.userId}, (err,user) =>{
-        if(err)
-            res.send(err)
-        res.json({message:"user deleted"});
+        if(err){res.send(err) }
+        else{
+            res.json({message:"user deleted"});
+            //TODO Delete all task and places from
+            //the databse conrresponding to the user
+        }
     })
 }
 /*========================================================================*/
