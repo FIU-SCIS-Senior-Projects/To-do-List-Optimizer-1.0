@@ -12,6 +12,9 @@ import {Actions} from 'react-native-router-flux';
 
 import MapView from 'react-native-maps';
 
+import NavigationBar from './NavigationBar';
+import StartButton from './StartButton';
+
 const {width, height} = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
@@ -27,6 +30,7 @@ class MapForm extends Component {
     super(props);
 
     this.state = {
+      navigationStarted: false,
       center: false,
       user: {
         latitude: LATITUDE,
@@ -204,44 +208,48 @@ class MapForm extends Component {
   }
 
   render() {
-    return (<View style={styles.container}>
-      <MapView
-        provider={this.props.provider}
-        style={styles.map}
-        initialRegion={this.state.region}
-        scrollEnabled={true}
-        showsUserLocation={true}
-        region={this.state.center ? this.state.region : null}
-        // onPanDrag={e => this.onPanDrag(e)}
+    return (
+      <View style={styles.container}>
 
-        // onRegionChange={ region => this.setState({region}) }
+        <MapView
+          provider={this.props.provider}
+          style={styles.map}
+          initialRegion={this.state.region}
+          scrollEnabled={true}
+          showsUserLocation={true}
+          region={this.state.center ? this.state.region : null}
+          // onPanDrag={e => this.onPanDrag(e)}
 
-        // onRegionChangeComplete={ region => this.setState({region}) }
-      >
+          // onRegionChange={ region => this.setState({region}) }
 
-        <MapView.Polyline
-          key={0}
-          coordinates={this.state.polylines}
-          strokeColor="#077"
-          fillColor="rgba(255,0,200,0.5)"
-          strokeWidth={4}/>
-      </MapView>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() => this.route()} style={[styles.bubble, styles.button]}>
-          <Text>Route</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.center()} style={[styles.bubble, styles.button]}>
-          <Text>Center</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.overView()} style={[styles.bubble, styles.button]}
-          disabled={!this.state.route.routed}>
-          <Text>Overview</Text>
-        </TouchableOpacity>
-      </View>
-    </View>);
+          // onRegionChangeComplete={ region => this.setState({region}) }
+        >
+
+          <MapView.Polyline
+            key={0}
+            coordinates={this.state.polylines}
+            strokeColor="#077"
+            fillColor="rgba(255,0,200,0.5)"
+            strokeWidth={4}/>
+            {/* <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => this.route()} style={[styles.bubble, styles.button]}>
+                <Text>Route</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.center()} style={[styles.bubble, styles.button]}>
+                <Text>Center</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.overView()} style={[styles.bubble, styles.button]}
+                disabled={!this.state.route.routed}>
+                <Text>Overview</Text>
+              </TouchableOpacity>
+            </View> */}
+            <NavigationBar manouver='right turn' text='turn right' place='Walgreens' eta={34}/>
+        </MapView>
+          <StartButton />
+      </View>);
   }
 }
 
@@ -272,7 +280,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginVertical: 20,
+    marginVertical: 120,
     backgroundColor: 'transparent'
   }
 });
