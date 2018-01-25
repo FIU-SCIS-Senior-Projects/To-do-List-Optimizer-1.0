@@ -18,4 +18,6 @@ module.exports = function(app){
 
     app.route('/:userId/place/add')
         .post(place.add_place);
+    app.route('/:userId/place/search/:placeId')
+        .get(place.search_place);
 };

@@ -26,5 +26,5 @@ var routes = require('./api/routes/allRoutes'); //importing route
 routes(app); //register the route
 
 app.listen(port);
-
+console.log("*************************************************");
 console.log('todo list RESTful API server started on: ' + port);
