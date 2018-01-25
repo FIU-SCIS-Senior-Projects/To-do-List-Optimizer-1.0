@@ -6,7 +6,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import MapForm from '../components/MapForm';
+import MapForm from '../components/map/MapForm';
 
 class MapContainer extends Component{
   constructor(props){
