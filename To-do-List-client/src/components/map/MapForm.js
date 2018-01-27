@@ -218,11 +218,6 @@ class MapForm extends Component {
           scrollEnabled={true}
           showsUserLocation={true}
           region={this.state.center ? this.state.region : null}
-          // onPanDrag={e => this.onPanDrag(e)}
-
-          // onRegionChange={ region => this.setState({region}) }
-
-          // onRegionChangeComplete={ region => this.setState({region}) }
         >
 
           <MapView.Polyline
