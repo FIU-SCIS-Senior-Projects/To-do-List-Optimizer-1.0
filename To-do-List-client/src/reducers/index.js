@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import TeamReducer from './TeamReducer';
-import CharactersReducer from './CharactersReducer';
+import MapReducer from './MapReducer';
+// import CharactersReducer from './CharactersReducer';
 
  export default combineReducers({
-   team: TeamReducer,
-   characters: CharactersReducer
+   map: MapReducer,
+   // characters: CharactersReducer
  });

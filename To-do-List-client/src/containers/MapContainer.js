@@ -40,4 +40,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(WelcomeContainer);
+export default connect(null, mapDispatchToProps)(MapContainer);

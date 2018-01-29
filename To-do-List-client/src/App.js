@@ -29,8 +29,14 @@ export default class App extends Component<{}> {
           <Scene key='root'>
             <Scene key='login' component={LoginScene} title='Login'/>
             <Scene key='main' component={MainScene} title='Main'/>
-            <Scene key='itinerary' component={ItineraryScene} title='Itinerary'/>
-            <Scene key='map' component={MapScene} title='Map'/>
+            <Scene key="tabbar" tabs={true} tabBarStyle={{ backgroundColor: '#eee' }}>
+              <Scene key="map" title="Map" initial={true}>
+                <Scene key="_map" component={MapScene} title="Map" />
+              </Scene>
+              <Scene key="itin" title="Itinerary">
+                <Scene key="itinerary" component={ItineraryScene} title="Itinerary" />
+              </Scene>
+            </Scene>
             <Scene key='entry' component={NewEntryScene} title='Entry'/>
           </Scene>
         </Router>

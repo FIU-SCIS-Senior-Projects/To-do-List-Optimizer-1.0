@@ -13,7 +13,7 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 
-import {getRoute} from '../API/google'
+import {getRoute} from '../api/googleApi'
 
 import Place from './Place';
 
