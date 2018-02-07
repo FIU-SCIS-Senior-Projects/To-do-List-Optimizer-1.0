@@ -44,14 +44,20 @@ class MainContainer extends Component{
             longitude: -81.79478670000003,
           }
         }
+      ],
+      tasks:[
+        {
+          id: 100,
+          description: 'Buy Vitamins',
+          placeId: 10,
+        }
       ]
     }
   }
 
   componentDidMount(){
-
-
     this.props.Actions.addPlace(this.state.places[0]);
+    this.props.Actions.addTask(this.state.tasks[0]);
   }
 
   render(){

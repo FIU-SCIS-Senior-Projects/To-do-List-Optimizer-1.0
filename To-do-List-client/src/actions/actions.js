@@ -85,9 +85,9 @@ export function addPlace(place){
   }
 }
 
-export function addTask(placeId){
+export function addTask(task){
   return {
     type: ADD_TASK,
-    payload: { placeId},
+    payload: { task},
   }
 }
