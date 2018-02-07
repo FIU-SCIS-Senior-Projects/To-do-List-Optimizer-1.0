@@ -29,7 +29,7 @@ export const ADD_TASK = 'ADD_TASK';
  */
 export function getRoute(current, places, destination, optimize) {
   return (dispatch) => {
-    googleApi.getRoute(current, places, destination, optimize).then((results) => {;
+    googleApi.getRoute(current, places, destination, optimize).then((results) => {
       dispatch(getRouteSuccess(results));
     }).catch((error) => {
       dispatch(getRouteFailure(error));

@@ -50,14 +50,33 @@ class MainContainer extends Component{
           id: 100,
           description: 'Buy Vitamins',
           placeId: 10,
+        },
+        {
+          id: 101,
+          description: 'Buy Soap',
+          placeId: 10,
         }
       ]
     }
+
+    this.handleRoute = this.handleRoute.bind(this);
   }
 
-  componentDidMount(){
-    this.props.Actions.addPlace(this.state.places[0]);
-    this.props.Actions.addTask(this.state.tasks[0]);
+  componentWillMount(){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.Actions.updateLocation(position);
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+    this.state.places.forEach((place) => {
+      this.props.Actions.addPlace(place);
+    })
+
+    this.state.tasks.forEach((place) => {
+      this.props.Actions.addTask(place);
+    })
   }
 
   render(){
@@ -65,7 +84,7 @@ class MainContainer extends Component{
       <View>
         <TouchableOpacity
             onPress={() => {
-              Actions.tabbar();
+              this.handleRoute();
             }}
           >
           <Text>
@@ -86,10 +105,18 @@ class MainContainer extends Component{
       </View>
     );
   }
+
+  handleRoute() {
+    this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.props.user.location.coords, true);
+    Actions.tabbar();
+  }
 }
 
 function mapStateToProps(state) {
-  return { errands: state.errands };
+  return {
+    errands: state.errands,
+    user: state.user
+  };
 }
 
 function mapDispatchToProps(dispatch) {

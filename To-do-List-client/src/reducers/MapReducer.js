@@ -38,7 +38,7 @@ export default function MapReducer(state = {route: {}, currentRegion: InitialReg
       return {
         ...state,
         isRouting: false,
-        route: convertGoogleResponse(action.payload)
+        route: convertGoogleResponse(action.payload.response)
       };
 
     case GET_ROUTE_FAILURE:

@@ -16,12 +16,12 @@ export function getRoute(current, places, destination, optimize) {
   var origin = `origin=${current.latitude},${current.longitude}`; // creates the origin part of the query
   var destination = `&destination=${destination.latitude},${destination.longitude}`; // creates the destination part of the query
   var optimization = `&waypoints=optimize:${optimize? 'true': 'false'}`; // creates the optimization part of the query
+  console.log(places);
+  Object.keys(places).map((placeId,id) => {query += `|${places[placeId].location.latitude},${places[placeId].location.longitude}`}); // creates the places generation part of the query
 
-  places.map((place,id) => {query += `|${place.location.latitude},${place.location.longitude}`}); // creates the places generation part of the query
+  var url = `${BASE_URL}${origin}${destination}${optimization}${query}`;
 
-  var url = `${BASE_URL}${origin}${destination}${optimization}${query}`
-
-  fetch(url)
+  return fetch(url)
   .then(response => response.json())
   .then(responseJson => {
     return responseJson.routes[0];
