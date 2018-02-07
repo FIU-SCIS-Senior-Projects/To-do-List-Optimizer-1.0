@@ -1,16 +1,40 @@
 import {
+    Dimensions,
+} from 'react-native'
+
+import {
   GET_ROUTE_REQUESTED,
   GET_ROUTE_SUCCESS,
-  GET_ROUTE_FAILURE
+  GET_ROUTE_FAILURE,
+  OVERVIEW
 } from '../actions/actions';
 
-export default function MapReducer(state = {route: {}, isRouting: false, error: null}, action) {
+const {width, height} = Dimensions.get('window');
+
+const ASPECT_RATIO = width / height;
+const LATITUDE = 26.14777;
+const LONGITUDE = -81.79091;
+const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA_ZOOMED = 0.015;
+const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+const LONGITUDE_DELTA_ZOOMED = LATITUDE_DELTA_ZOOMED * ASPECT_RATIO;
+
+let InitialRegion = {
+  latitude: LATITUDE,
+  longitude: LONGITUDE,
+  latitudeDelta: LATITUDE_DELTA,
+  longitudeDelta: LONGITUDE_DELTA
+}
+
+export default function MapReducer(state = {route: {}, currentRegion: InitialRegion, navigating: false, isRouting: false, error: null}, action) {
   switch(action.type) {
+    case OVERVIEW:
+      return {...state, currentRegion: state.route.bounds.region, navigating: false}
+
     case GET_ROUTE_REQUESTED:
       return {...state, isRouting: true};
 
     case GET_ROUTE_SUCCESS:
-    console.log('action.payload: ', action.payload);
       return {
         ...state,
         isRouting: false,
@@ -100,9 +124,9 @@ function convertGoogleResponse(route){
       longitude: longitude_difference / 2,
       latitudeDelta: latitude_difference,
       longitudeDelta: longitude_difference,
-    }
+    },
   },
-  overview_polyline: decodePoints(route.overview_polyline.points)
+  overview_polyline: decodePoints(route.overview_polyline.points),
 }
 
 return processedRoute;

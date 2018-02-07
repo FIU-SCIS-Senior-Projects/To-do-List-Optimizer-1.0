@@ -9,38 +9,39 @@ import {
 import {
   Router,
   Scene,
+  Stack,
+  Tabs,
 } from 'react-native-router-flux';
 
 import configureStore from './store/store'
 import { Provider } from 'react-redux';
 const store = configureStore({});
 
+// Loading main Scenes
 import LoginScene from './scenes/LoginScene';
 import MainScene from './scenes/MainScene';
 import MapScene from './scenes/MapScene';
 import NewEntryScene from './scenes/NewEntryScene';
 import ItineraryScene from './scenes/ItineraryScene';
 
-export default class App extends Component<{}> {
+import TabIcon from './components/Tab';
+
+export default class App extends Component{
   render() {
     return (
       <Provider store={store}>
         <Router>
-          <Scene key='root'>
-            <Scene key='login' component={LoginScene} title='Login'/>
+          <Stack key='root'>
+            <Scene key='login' initial={true} component={LoginScene} title='Login' direction="vertical"/>
             <Scene key='main' component={MainScene} title='Main'/>
-            <Scene key="tabbar" tabs={true} tabBarStyle={{ backgroundColor: '#eee' }}>
-              <Scene key="map" title="Map" initial={true}>
-                <Scene key="_map" component={MapScene} title="Map" />
-              </Scene>
-              <Scene key="itin" title="Itinerary">
+            <Tabs key="tabbar" swipeEnabled>
+                <Scene key="map" component={MapScene} title='Map'/>
                 <Scene key="itinerary" component={ItineraryScene} title="Itinerary" />
-              </Scene>
-            </Scene>
+            </Tabs>
             <Scene key='entry' component={NewEntryScene} title='Entry'/>
-          </Scene>
-        </Router>
-      </Provider>
+          </Stack>
+      </Router>
+    </Provider>
     );
   }
 }

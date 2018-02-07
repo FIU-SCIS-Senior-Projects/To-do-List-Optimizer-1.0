@@ -13,7 +13,9 @@ class ItineraryScene extends Component {
   }
   render() {
     return (
-      <ItineraryContainer />
+      <Text>
+        Itinerary Scene
+      </Text>
     )
   }
 }

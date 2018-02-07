@@ -14,9 +14,18 @@ import MapContainer from '../containers/MapContainer';
 
   render(){
     return(
+      <View style={styles.container}>
         <MapContainer />
+      </View>
+
     )
   }
 }
 
+const styles = StyleSheet.create({
+  container:{
+    flex: 1,
+    justifyContent: 'center',
+  }
+})
 export default MapScene;
