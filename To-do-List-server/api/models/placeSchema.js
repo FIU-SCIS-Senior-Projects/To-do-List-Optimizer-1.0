@@ -7,11 +7,9 @@ var PlaceSchema = new mongoose.Schema({
       trim: true
   },
    author:{
-     type: mongoose.Schema.Types.ObjectId,
-     ref: 'User'
+     type: mongoose.Schema.Types.ObjectId, ref:'User'
   }
-    //location: LocationSchema,
-    //task: [TaskSchema]
+
 });
 
 var Place = mongoose.model('Place', PlaceSchema);

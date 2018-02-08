@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
     User     = mongoose.model('User'),
-    Place    = mongoose.model('Place');
+    Place    = mongoose.model('Place'),
+    Task   = mongoose.model('Task');
 
 
 /*=======================================
@@ -26,16 +27,25 @@ exports.add_place = (req, res) => {
     });
 }
 /*=======================================
-    * POST: Finds a place
+    * GET: Finds a place
 =======================================*/
 exports.search_place = (req, res) => {
-      res.json("searching Place")
-
-    //placeId = req.params._id;
-    //   Place.findOne({name: 'CVS'}).populate('author').exec((err, place) =>{
-    //     if(err){ res.send(err) }
-    //     else{
-    //         console.log('The Owner of the place is %s', place.author.name);
-    //     }
-    // })
+    Place.findById(req.params.placeId, (err, place) =>{
+        if(err){
+          res.send(err)
+        }
+        res.json(place);
+    });
+}
+/*=======================================
+    * GET: display_all places
+=======================================*/
+exports.display_all = (req, res) => {
+    var user = {author:req.params.userId}
+    Place.find({user}, (err, places) =>{
+      if(err){
+        res.send(err)
+      }
+      res.json(places);
+    });
 }

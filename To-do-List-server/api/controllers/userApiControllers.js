@@ -2,7 +2,8 @@
 
 var mongoose = require('mongoose'),
      User    = mongoose.model('User'),
-     Place   = mongoose.model('Place');
+     Place   = mongoose.model('Place'),
+     Task    = mongoose.model('Task');
 
 /*=======================================
 * POST: Adds a new user
@@ -15,7 +16,6 @@ exports.add_a_user = (req, res) => {
         res.json(user);
     })
 };
-
 /*=======================================
 * GET: Returns all the users
 =======================================*/
@@ -45,7 +45,7 @@ exports.search_user = (req, res) => {
 * POST: Updates a user
 =======================================*/
 exports.update_a_user = (req, res) => {
-    var userId = {_id:req.params.userId}
+    var userId = {_id:req.params.userId};
     User.findOneAndUpdate({userId}, req.body, {new:true}, (err, user)=>{
         if(err)
             res.send(err)
