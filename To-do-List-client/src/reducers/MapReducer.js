@@ -6,7 +6,8 @@ import {
   GET_ROUTE_REQUESTED,
   GET_ROUTE_SUCCESS,
   GET_ROUTE_FAILURE,
-  OVERVIEW
+  OVERVIEW,
+  CENTER
 } from '../actions/actions';
 
 const {width, height} = Dimensions.get('window');
@@ -15,9 +16,10 @@ const ASPECT_RATIO = width / height;
 const LATITUDE = 26.14777;
 const LONGITUDE = -81.79091;
 const LATITUDE_DELTA = 0.0922;
-const LATITUDE_DELTA_ZOOMED = 0.015;
+const LATITUDE_DELTA_ZOOMED = 0.0035;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 const LONGITUDE_DELTA_ZOOMED = LATITUDE_DELTA_ZOOMED * ASPECT_RATIO;
+const DELTA_MARGIN = 0.001;
 
 let InitialRegion = {
   latitude: LATITUDE,
@@ -26,10 +28,19 @@ let InitialRegion = {
   longitudeDelta: LONGITUDE_DELTA
 }
 
-export default function MapReducer(state = {route: {}, currentRegion: InitialRegion, navigating: false, isRouting: false, error: null}, action) {
+export default function MapReducer(state = {route: {}, currentRegion: InitialRegion, overview: true,navigating: false, isRouting: false, error: null}, action) {
   switch(action.type) {
     case OVERVIEW:
-      return {...state, currentRegion: state.route.bounds.region, navigating: false}
+      if (state.isRouting) {
+        return state;
+      } else {
+        return {...state, currentRegion: state.route.bounds.region, overview: true}
+      }
+    case CENTER:
+      return {
+        ...state,
+        currentRegion: processCenterRegion(action.payload),
+        overview: false}
 
     case GET_ROUTE_REQUESTED:
       return {...state, isRouting: true};
@@ -113,17 +124,20 @@ function convertGoogleResponse(route){
 
   let processedRoute = {};
 
-  var latitude_difference = (route.bounds.northeast.lat + route.bounds.southwest.lat);
-  var longitude_difference = (route.bounds.northeast.lng + route.bounds.southwest.lng);
+  var latitude_span = (route.bounds.northeast.lat + route.bounds.southwest.lat);
+  var longitude_span = (route.bounds.northeast.lng + route.bounds.southwest.lng);
+
+  var latitude_difference = (route.bounds.northeast.lat - route.bounds.southwest.lat);
+  var longitude_difference = (route.bounds.northeast.lng - route.bounds.southwest.lng);
   processedRoute = {
   ...route,
   bounds: {
     ...route.bounds,
     region: {
-      latitude: latitude_difference / 2,
-      longitude: longitude_difference / 2,
-      latitudeDelta: latitude_difference,
-      longitudeDelta: longitude_difference,
+      latitude: latitude_span / 2,
+      longitude: longitude_span / 2,
+      latitudeDelta: latitude_difference + DELTA_MARGIN,
+      longitudeDelta: longitude_difference + DELTA_MARGIN,
     },
   },
   overview_polyline: decodePoints(route.overview_polyline.points),
@@ -131,4 +145,18 @@ function convertGoogleResponse(route){
 
 return processedRoute;
 
+}
+
+function processCenterRegion(coords){
+  let processedRegion = {};
+
+  processedRegion = {
+    latitude: coords.latitude,
+    longitude: coords.longitude,
+    latitudeDelta: LATITUDE_DELTA_ZOOMED,
+    longitudeDelta: LONGITUDE_DELTA_ZOOMED,
+
+  };
+
+  return processedRegion;
 }
