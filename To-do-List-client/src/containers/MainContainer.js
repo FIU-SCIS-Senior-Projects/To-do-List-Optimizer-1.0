@@ -22,28 +22,28 @@ class MainContainer extends Component{
       places:[
         {
           id: 10,
-          name: 'Third Street South',
+          name: 'Yerba Buena Center',
           location:{
-            latitude: 26.1359886,
-            longitude: -81.8024236,
+            latitude: 37.7850153,
+            longitude: -122.4023464,
           }
         },
         {
           id: 20,
-          name: 'Tin City Shops',
-          location:{
-            latitude: 26.141244,
-            longitude: -81.79052660000002,
+          name: 'Tenderloin Museum',
+          location: {
+            latitude: 37.7838734,
+            longitude: -122.41418340000001
           }
         },
         {
           id: 30,
-          name: 'The Shelter Options Shoppe',
-          location:{
-            latitude: 26.1495793,
-            longitude: -81.79478670000003,
+          name: 'Transamerica Pyramid',
+          location: {
+            latitude:37.79518628639041,
+            longitude: -122.40278005599976
           }
-        }
+        },
       ],
       tasks:[
         {
@@ -56,7 +56,15 @@ class MainContainer extends Component{
           description: 'Buy Soap',
           placeId: 10,
         }
-      ]
+      ],
+      destination:{
+        id: 30,
+        name: 'Blue Bottle Coffee',
+        location:{
+          latitude: 37.7862376,
+          longitude: -122.4047807,
+        }
+      }
     }
 
     this.handleRoute = this.handleRoute.bind(this);
@@ -107,7 +115,7 @@ class MainContainer extends Component{
   }
 
   handleRoute() {
-    this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.props.user.location.coords, true);
+    this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.state.destination, true);
     Actions.tabbar();
   }
 }

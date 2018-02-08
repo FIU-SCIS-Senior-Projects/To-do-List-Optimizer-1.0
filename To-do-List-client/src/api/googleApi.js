@@ -14,13 +14,13 @@ export function getRoute(current, places, destination, optimize) {
   var query = ''; // This holds the formatted list of places
 
   var origin = `origin=${current.latitude},${current.longitude}`; // creates the origin part of the query
-  var destination = `&destination=${destination.latitude},${destination.longitude}`; // creates the destination part of the query
+  var destination = `&destination=${destination.location.latitude},${destination.location.longitude}`; // creates the destination part of the query
   var optimization = `&waypoints=optimize:${optimize? 'true': 'false'}`; // creates the optimization part of the query
   console.log(places);
   Object.keys(places).map((placeId,id) => {query += `|${places[placeId].location.latitude},${places[placeId].location.longitude}`}); // creates the places generation part of the query
-
+  console.log(query);
   var url = `${BASE_URL}${origin}${destination}${optimization}${query}`;
-
+  console.log(url);
   return fetch(url)
   .then(response => response.json())
   .then(responseJson => {

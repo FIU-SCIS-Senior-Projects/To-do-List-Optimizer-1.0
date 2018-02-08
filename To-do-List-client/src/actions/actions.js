@@ -1,5 +1,6 @@
 import * as googleApi from '../api/googleApi';
 
+// Map actions declaration
 export const GET_ROUTE_REQUESTED  = 'GET_ROUTE_REQUESTED';
 export const GET_ROUTE_SUCCESS    = 'GET_ROUTE_SUCCESS';
 export const GET_ROUTE_FAILURE    = 'GET_ROUTE_FAILURE';
