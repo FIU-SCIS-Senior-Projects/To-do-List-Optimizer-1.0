@@ -11,7 +11,6 @@ import {Actions} from 'react-native-router-flux';
 
 import MapView from 'react-native-maps';
 
-import NavigationBar from './NavigationBar';
 import StartButton from './StartButton';
 
 class MapForm extends Component {
@@ -52,7 +51,7 @@ class MapForm extends Component {
                 <Text>Overview</Text>
               </TouchableOpacity>
             </View>
-            {/* <NavigationBar manouver='right turn' text='turn right' place='Walgreens' eta={34}/> */}
+
         </MapView>
           {/* <StartButton /> */}
       </View>);

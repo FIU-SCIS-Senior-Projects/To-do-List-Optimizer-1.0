@@ -7,12 +7,7 @@ const styles = StyleSheet.create({
     height: (Platform.OS === 'ios') ? 64 : 54,
     flexDirection: 'row',
     paddingTop: 20,
-    backgroundColor: '#39416B',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
+    backgroundColor: '#54C4C8',
   },
   navBarItem: {
     flex: 1,
@@ -39,41 +34,25 @@ export default class Navigationbar extends Component {
           <Image
             style={{width: 25, height: 45}}
             resizeMode="contain"
-            source={ require('../../assets/icons/navigation/Armagedon-CompassIcon.png')}></Image>
+            source={ require('../assets/icons/navigation/Armagedon-CompassIcon.png')}></Image>
         </TouchableOpacity>
       )
   }
 
-  _renderMiddle() {
-    return (
-      <View style={[styles.navBarItem, {alignItems: 'center'}]}>
-        <Text style={styles.placeText}>WALGREENS</Text>
-      </View>
-    )
-  }
-
-  _renderRight() {
-    return (
-      <View style={[styles.navBarItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
-        <TouchableOpacity
-          onPress={() => {Actions.itinerary();}}
-          style={{ paddingRight: 10 }}>
-          <Image
-            style={{width: 25, height: 45}}
-            resizeMode="contain"
-            source={ require('../../assets/icons/navigation/Armagedon-ListIcon.png')}></Image>
-        </TouchableOpacity>
-      </View>
-    )
-  }
+  // _renderMiddle() {
+  //   return (
+  //     <View style={[styles.navBarItem, {alignItems: 'center'}]}>
+  //       <Text style={styles.placeText}>WALGREENS</Text>
+  //     </View>
+  //   )
+  // }
 
   render() {
 
     return (
         <View style={styles.container}>
           { this._renderLeft() }
-          { this._renderMiddle() }
-          { this._renderRight() }
+          {/* { this._renderMiddle() } */}
         </View>
     )
   }

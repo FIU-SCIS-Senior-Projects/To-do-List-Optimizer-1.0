@@ -28,7 +28,13 @@ let InitialRegion = {
   longitudeDelta: LONGITUDE_DELTA
 }
 
-export default function MapReducer(state = {route: {}, currentRegion: InitialRegion, overview: true,navigating: false, isRouting: false, error: null}, action) {
+export default function MapReducer(state = {
+                                            route: {},
+                                            currentRegion: InitialRegion,
+                                            overview: true,
+                                            navigating: false,
+                                            isRouting: false,
+                                            error: null}, action) {
   switch(action.type) {
     case OVERVIEW:
       if (state.isRouting) {
