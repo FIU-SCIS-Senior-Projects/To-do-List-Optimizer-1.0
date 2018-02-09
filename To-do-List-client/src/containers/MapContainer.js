@@ -17,6 +17,7 @@ class MapContainer extends Component{
     super(props);
 
     this.handleOverview = this.handleOverview.bind(this);
+    this.handleCenter = this.handleCenter.bind(this);
   }
 /**
  * TODO: Getting the route before the component is mounted.
@@ -45,6 +46,7 @@ class MapContainer extends Component{
     return(
       <MapForm
         overview={this.handleOverview}
+        center={this.handleCenter}
         currentRegion={currentRegion}
         polyline={overview_polyline}/>
     );
@@ -53,10 +55,17 @@ class MapContainer extends Component{
   handleOverview() {
     this.props.Actions.overview();
   }
+
+  handleCenter() {
+    this.props.Actions.center(this.props.user.location.coords);
+  }
 }
 
 function mapStateToProps(state) {
-  return { map: state.map };
+  return {
+    map: state.map,
+    user: state.user
+   };
 }
 
 function mapDispatchToProps(dispatch) {

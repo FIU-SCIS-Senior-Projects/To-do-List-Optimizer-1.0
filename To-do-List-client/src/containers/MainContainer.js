@@ -13,6 +13,8 @@ import * as ActionCreators from '../actions/actions';
 
 import {Actions} from 'react-native-router-flux';
 
+import MainForm from '../components/main/MainForm';
+
 
 class MainContainer extends Component{
   constructor(props){
@@ -68,6 +70,7 @@ class MainContainer extends Component{
     }
 
     this.handleRoute = this.handleRoute.bind(this);
+    this.handleAddErrand = this.handleAddErrand.bind(this);
   }
 
   componentWillMount(){
@@ -78,6 +81,17 @@ class MainContainer extends Component{
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
+
+  }
+
+  render(){
+    return(
+      <MainForm addErrand={this.handleAddErrand} route={this.handleRoute}/>
+    );
+  }
+
+  handleAddErrand(){
+
     this.state.places.forEach((place) => {
       this.props.Actions.addPlace(place);
     })
@@ -85,40 +99,17 @@ class MainContainer extends Component{
     this.state.tasks.forEach((place) => {
       this.props.Actions.addTask(place);
     })
-  }
 
-  render(){
-    return(
-      <View>
-        <TouchableOpacity
-            onPress={() => {
-              this.handleRoute();
-            }}
-          >
-          <Text>
-            Map
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-            onPress={() => {
-              Actions.entry({
-
-              });
-            }}
-          >
-          <Text>
-            Entry
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
+    Actions.entry();
   }
 
   handleRoute() {
+    this.props.Actions.getRouteRequested();
     this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.state.destination, true);
     Actions.tabbar();
   }
 }
+
 
 function mapStateToProps(state) {
   return {

@@ -11,7 +11,6 @@ import {Actions} from 'react-native-router-flux';
 
 import MapView from 'react-native-maps';
 
-import NavigationBar from './NavigationBar';
 import StartButton from './StartButton';
 
 class MapForm extends Component {
@@ -42,21 +41,17 @@ class MapForm extends Component {
             fillColor="rgba(255,0,200,0.5)"
             strokeWidth={4}/>
             <View style={styles.buttonContainer}>
-              {/* <TouchableOpacity
-                onPress={() => this.route()} style={[styles.bubble, styles.button]}>
-                <Text>Route</Text>
-              </TouchableOpacity> */}
-              {/* <TouchableOpacity
-                onPress={this.props.center()} style={[styles.bubble, styles.button]}>
+              <TouchableOpacity
+                onPress={() => {this.props.center()}} style={[styles.bubble, styles.button]}>
                 <Text>Center</Text>
-              </TouchableOpacity> */}
-              {/* <TouchableOpacity
-                onPress={this.props.overview()} style={[styles.bubble, styles.button]}>
-                // disabled={!this.state.route.routed}>
+              </TouchableOpacity>
+              <TouchableOpacity style={[styles.bubble, styles.button]}
+                onPress={() =>{
+                  this.props.overview()}}>
                 <Text>Overview</Text>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
-            {/* <NavigationBar manouver='right turn' text='turn right' place='Walgreens' eta={34}/> */}
+
         </MapView>
           {/* <StartButton /> */}
       </View>);

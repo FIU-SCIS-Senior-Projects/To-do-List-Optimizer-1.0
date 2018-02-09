@@ -6,6 +6,7 @@ export const GET_ROUTE_SUCCESS    = 'GET_ROUTE_SUCCESS';
 export const GET_ROUTE_FAILURE    = 'GET_ROUTE_FAILURE';
 
 export const OVERVIEW = 'OVERVIEW';
+export const CENTER = 'CENTER';
 
 // User actions declaration
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
@@ -42,6 +43,13 @@ export function getRoute(current, places, destination, optimize) {
 export function overview(){
   return{
     type: OVERVIEW,
+  }
+}
+
+export function center(userLocation){
+  return{
+    type: CENTER,
+    payload: userLocation,
   }
 }
 
