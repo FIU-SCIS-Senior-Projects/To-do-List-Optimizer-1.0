@@ -8,11 +8,11 @@ class LoginScene extends Component {
 
   render() {
     return (<View>
-      
+
       {/* <WelcomeContainer /> */}
       <TouchableOpacity
           onPress={() => {
-            Actions.main({
+            Actions.tabbar({
 
             });
           }}

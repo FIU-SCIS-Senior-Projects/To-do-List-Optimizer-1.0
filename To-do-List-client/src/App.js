@@ -41,12 +41,18 @@ export default class App extends Component{
         <Router>
           <Stack key='root'>
             <Scene key='login' initial={true} component={LoginScene} title='Login' direction="vertical"/>
-            <Scene key='main' navBar={NavigationBarMain} component={MainScene} title='Main'/>
-            <Tabs key="tabbar"  swipeEnabled>
-                <Scene key="map"  navBar={NavigationBar} component={MapScene} title='Map'/>
-                <Scene key="itinerary" component={ItineraryScene} title="Itinerary" />
-            </Tabs>
-            <Scene key='entry' component={NewEntryScene} title='Entry'/>
+            {/* <Drawer
+              hideNavBar
+              key="drawer"
+              drawerImage={require('./assets/icons/navigation/Armagedon-CompassIcon.png')}
+              drawerWidth={300}> */}
+              <Tabs key="tabbar"  hideTabBar>
+                  <Scene key='main'  initial={true} navBar={NavigationBarMain} component={MainScene} title='Main'/>
+                  <Scene key="map"  navBar={NavigationBar} component={MapScene} title='Map'/>
+                  {/* <Scene key="itinerary" component={ItineraryScene} title="Itinerary" /> */}
+              </Tabs>
+              <Scene key='entry' component={NewEntryScene} title='Entry'/>
+            {/* </Drawer> */}
           </Stack>
       </Router>
     </Provider>

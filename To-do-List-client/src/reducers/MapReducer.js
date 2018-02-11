@@ -146,11 +146,33 @@ function convertGoogleResponse(route){
       longitudeDelta: longitude_difference + DELTA_MARGIN,
     },
   },
+  total_distance: calculateTotalDistance(route.legs),
+  total_time: calculateTotalTime(route.legs), //in seconds
   overview_polyline: decodePoints(route.overview_polyline.points),
 }
 
 return processedRoute;
 
+}
+
+function calculateTotalDistance(legs){
+  let totalDistance = 0;  //in feet
+
+  legs.forEach((leg) => {
+    totalDistance += leg.distance.value;
+  });
+
+  return totalDistance;
+}
+
+function calculateTotalTime(legs){
+  let totalTime = 0;  //in seconds
+
+  legs.forEach((leg) => {
+    totalTime += leg.duration.value;
+  });
+
+  return totalTime;
 }
 
 function processCenterRegion(coords){

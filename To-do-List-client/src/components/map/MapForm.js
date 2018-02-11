@@ -4,90 +4,176 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Dimensions,
+  Image,
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
 
 import MapView from 'react-native-maps';
+import { Header } from 'react-navigation';
+
+import { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 
 import StartButton from './StartButton';
+import ManouverBar from './ManouverBar';
 
 class MapForm extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      centered: false,
+    }
+    this.convertTimeToMin = this.convertTimeToMin.bind(this);
+    this.getETALabel = this.getETALabel.bind(this);
+    this.onMapDrag = this.onMapDrag.bind(this);
 
   }
 
+  onMapDrag(){
+    console.log('outside')
+    if (this.state.centered) {
+      console.log('here')
+      this.setState(previousState => {
+          return {
+            ...previousState,
+            centered: false
+          };
+        });
+    }
+  }
+
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
+        <ManouverBar maneuver={this.getNextManeuver().toUpperCase()} eta={this.getETALabel()}/>
+        <View style={styles.mapContainer}>
+          <MapView
+            // provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            initialRegion={this.props.currentRegion}
+            scrollEnabled={true}
+            showsUserLocation={true}
+            region={this.props.currentRegion}
+            onTouchStart={(e) => this.onMapDrag()}
+          >
 
-        <MapView
-          // provider={this.props.provider}
-          style={styles.map}
-          initialRegion={this.props.currentRegion}
-          scrollEnabled={true}
-          showsUserLocation={true}
-          region={this.props.currentRegion}
-        >
+            <MapView.Polyline
+              key={0}
+              coordinates={this.props.polyline}
+              strokeColor="#077"
+              fillColor="rgba(255,0,200,0.5)"
+              strokeWidth={4}
+            />
 
-          <MapView.Polyline
-            key={0}
-            coordinates={this.props.polyline}
-            strokeColor="#077"
-            fillColor="rgba(255,0,200,0.5)"
-            strokeWidth={4}/>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => {this.props.center()}} style={[styles.bubble, styles.button]}>
-                <Text>Center</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.bubble, styles.button]}
-                onPress={() =>{
-                  this.props.overview()}}>
-                <Text>Overview</Text>
-              </TouchableOpacity>
-            </View>
+          </MapView>
+          {!this.state.centered?  //if the screen is centered in the user hide the button
+          <TouchableOpacity
+            style={[styles.round, styles.button, {bottom: 80, right: 10}]}
+            onPress={() => {this.setState(prev => {return {...prev, centered: true}});this.props.center()}}>
+            <Image
+              style={{width: 25, height: 25}}
+              resizeMode="contain"
+              source={ require('../../assets/icons/navigation/navigation_arrow.png')}></Image>
+          </TouchableOpacity> : null}
+          <TouchableOpacity
+            style={[styles.round, styles.button, {bottom: 10, right: 10}]}
+            onPress={() => {this.setState(prev => {return {...prev, centered: false}});this.props.overview()}}>
+            <Image
+              style={{width: 25, height: 25}}
+              resizeMode="contain"
+              source={ require('../../assets/icons/navigation/overview.png')}></Image>
+          </TouchableOpacity>
 
-        </MapView>
-          {/* <StartButton /> */}
+        </View>
+
       </View>);
+  }
+
+  getETALabel(){
+    let timeInMin = this.convertTimeToMin();
+    if (timeInMin >= 60) {
+      let hours = Math.floor(timeInMin/60)
+      return `${hours} hour${hours>1? 's':''} ${timeInMin%60} min.`
+    } else{
+      return `${timeInMin.toFixed(1)} min.`
+    }
+
+  }
+
+  convertTimeToMin(){
+    if (this.props.currentLeg.duration) {
+      let timeInSeconds = this.props.currentLeg.duration.value;
+      return timeInSeconds/60;
+    }
+
+    return 0;
+
+  }
+
+  getNextManeuver(){
+      if(this.props.currentLeg.steps ){
+        for (var i = 0; i < this.props.currentLeg.steps.length; i++) {
+          if (this.props.currentLeg.steps[i].maneuver) {
+            return this.props.currentLeg.steps[i].maneuver;
+          }
+        }
+      }
+      return ''
+
   }
 }
 
 const styles = StyleSheet.create({
+  mapContainer:{
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: Dimensions.get('window').height - Header.HEIGHT - 70, //70 from the navigation bar
+  },
+  container_1:{
+    flex: 1,
+
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    height: 70,
+    width: Dimensions.get('window').width,
+    top: 0,
+
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+  },
   container: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'flex-end',
+
+    flexDirection: 'column',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    flexDirection: 'column',
+     width: Dimensions.get('window').width,
+     height: Dimensions.get('window').height - Header.HEIGHT - 70,
+    // ...StyleSheet.absoluteFillObject
   },
-  bubble: {
+  round: {
+    width: 60,
+    height: 60,
     backgroundColor: 'rgba(255,255,255,0.7)',
-    paddingHorizontal: 18,
-    paddingVertical: 12,
-    borderRadius: 20
-  },
-  latlng: {
-    width: 200,
-    alignItems: 'stretch'
+    borderRadius: 30
+
   },
   button: {
-    width: 80,
-    paddingHorizontal: 12,
+    position: 'absolute',
+    justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10
+
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    marginVertical: 120,
-    backgroundColor: 'transparent'
-  }
 });
 
 export default MapForm;

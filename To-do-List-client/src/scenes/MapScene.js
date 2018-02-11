@@ -10,8 +10,11 @@ import {
 import { Actions} from 'react-native-router-flux';
 import MapContainer from '../containers/MapContainer';
 
- class MapScene extends Component{
+class MapScene extends Component{
 
+ static navigatorStyle = {
+         tabBarHidden: true
+     };
   render(){
     return(
       <View style={styles.container}>
@@ -20,6 +23,7 @@ import MapContainer from '../containers/MapContainer';
 
     )
   }
+
 }
 
 const styles = StyleSheet.create({

@@ -79,7 +79,6 @@ class ItineraryForm extends Component{
 
     // sets the watcher so when the user changes coordinates it updates the class
     this.watchID = navigator.geolocation.watchPosition(position => {
-      console.log("Manny: Watch position Triggered");
       this.setState({
         user: {
           location:{

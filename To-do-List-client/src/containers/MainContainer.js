@@ -106,7 +106,7 @@ class MainContainer extends Component{
   handleRoute() {
     this.props.Actions.getRouteRequested();
     this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.state.destination, true);
-    Actions.tabbar();
+    Actions.map();
   }
 }
 

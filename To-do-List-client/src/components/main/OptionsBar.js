@@ -16,11 +16,13 @@ import RoundButton from './RoundButton';
 const ADD_BUTTON_DIAMETER = 50;
 const ROUTE_BUTTON_DIAMTER = 70;
 
-const ADD_BUTTON_LEFT_MARGIN_PERCENT = 0.15;
+// const ADD_BUTTON_LEFT_MARGIN_PERCENT = 0.25;
 
-const ADD_BUTTON_LEFT_MARGIN = width * ADD_BUTTON_LEFT_MARGIN_PERCENT;
+// const ADD_BUTTON_LEFT_MARGIN = width * ADD_BUTTON_LEFT_MARGIN_PERCENT;
+const ADD_BUTTON_LEFT_MARGIN = 90;
+const TEXT_LEFT_MARGIN = 20;
 
-const DESIRED_RIGHT_MARGIN = 5;
+const DESIRED_RIGHT_MARGIN = 20;
 
 class OptionsBar extends Component{
   constructor(props){
@@ -30,6 +32,12 @@ class OptionsBar extends Component{
   render(){
     return(
       <View style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.etaText}>ETA  </Text>
+            <Text style={styles.distanceText}>
+              21 min.
+            </Text>
+          </View>
           <View style={styles.addButtonContainer}>
             <RoundButton onPress={()=>{this.props.addErrand()}} diameter={ADD_BUTTON_DIAMETER} type='add'/>
           </View>
@@ -57,13 +65,26 @@ const styles = StyleSheet.create({
     bottom: 0,
     // justifyContent: 'center',
   },
+  textContainer: {
+    flexDirection: 'row',
+    paddingLeft: TEXT_LEFT_MARGIN,
+  },
+  etaText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  distanceText: {
+    fontSize: 16,
+    color: 'white'
+  },
   addButtonContainer:{
     // flex: 1,
     paddingLeft: ADD_BUTTON_LEFT_MARGIN,
   },
   routeButtonContainer:{
-    paddingLeft: calculateLeftMargin(DESIRED_RIGHT_MARGIN)
+    paddingLeft: 30
       // alignSelf: 'right'
-  }
+  },
 })
 export default OptionsBar;

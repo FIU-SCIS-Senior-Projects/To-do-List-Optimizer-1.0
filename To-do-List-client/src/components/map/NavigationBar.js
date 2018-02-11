@@ -56,7 +56,7 @@ export default class Navigationbar extends Component {
     return (
       <View style={[styles.navBarItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
         <TouchableOpacity
-          onPress={() => {Actions.itinerary();}}
+          onPress={() => {Actions.main();}}
           style={{ paddingRight: 10 }}>
           <Image
             style={{width: 25, height: 45}}

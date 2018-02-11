@@ -28,7 +28,6 @@ class MapContainer extends Component{
 
   componentDidMount() {
     this.watchID = navigator.geolocation.watchPosition(position => {
-      console.log(position);
       this.props.Actions.updateLocation(position);
     });
   }
@@ -41,14 +40,15 @@ class MapContainer extends Component{
 
     let {currentRegion} =  this.props.map;
     let {overview_polyline} = this.props.map.route;
-
+    let legs = this.props.map.route.legs;
 
     return(
       <MapForm
         overview={this.handleOverview}
         center={this.handleCenter}
         currentRegion={currentRegion}
-        polyline={overview_polyline}/>
+        polyline={overview_polyline}
+        currentLeg={legs? legs[0] : {}}/>
     );
   }
 

@@ -8,7 +8,11 @@ import MainContainer from '../containers/MainContainer';
  class MainScene extends Component{
    constructor(props){
      super(props);
+
    }
+   static navigatorStyle = {
+        tabBarHidden: true
+    };
 
   render(){
     return(
