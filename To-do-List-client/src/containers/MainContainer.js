@@ -14,6 +14,7 @@ import * as ActionCreators from '../actions/actions';
 import {Actions} from 'react-native-router-flux';
 
 import MainForm from '../components/main/MainForm';
+import {formatTime} from '../tools/timeTools';
 
 
 class MainContainer extends Component{
@@ -66,7 +67,8 @@ class MainContainer extends Component{
           latitude: 37.7862376,
           longitude: -122.4047807,
         }
-      }
+      },
+      updated: false
     }
 
     this.handleRoute = this.handleRoute.bind(this);
@@ -84,11 +86,21 @@ class MainContainer extends Component{
 
   }
 
+  componentDidUpdate(){
+    if (this.props.errands.places && this.props.user.location.coords && !this.state.updated) {
+      this.setState((prev) =>{
+        return {...prev, updated: true}
+      });
+      this.handleRoute();
+    }
+  }
   render(){
+
     return(
-      <MainForm addErrand={this.handleAddErrand} route={this.handleRoute}/>
+      <MainForm eta={formatTime(this.props.map.route.total_time)}  addErrand={this.handleAddErrand} route={this.handleRoute}/>
     );
   }
+
 
   handleAddErrand(){
 
@@ -100,13 +112,15 @@ class MainContainer extends Component{
       this.props.Actions.addTask(place);
     })
 
+    this.setState((prev) =>{
+      return {...prev, updated: false}
+    })
     Actions.entry();
   }
 
   handleRoute() {
     this.props.Actions.getRouteRequested();
     this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.state.destination, true);
-    Actions.map();
   }
 }
 
@@ -114,7 +128,8 @@ class MainContainer extends Component{
 function mapStateToProps(state) {
   return {
     errands: state.errands,
-    user: state.user
+    user: state.user,
+    map: state.map
   };
 }
 

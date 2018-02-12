@@ -63,9 +63,11 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   manouverText: {
+    fontFamily: "Lato",
     paddingLeft: 10
   },
   etaText: {
+    fontFamily: "Lato",
     position: 'absolute',
     right: 10,
   }

@@ -12,7 +12,7 @@ class LoginScene extends Component {
       {/* <WelcomeContainer /> */}
       <TouchableOpacity
           onPress={() => {
-            Actions.tabbar({
+            Actions.main({
 
             });
           }}

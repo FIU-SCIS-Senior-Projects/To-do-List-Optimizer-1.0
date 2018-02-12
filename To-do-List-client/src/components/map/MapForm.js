@@ -18,6 +18,7 @@ import { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 
 import StartButton from './StartButton';
 import ManouverBar from './ManouverBar';
+import {formatTime} from '../../tools/timeTools';
 
 class MapForm extends Component {
   constructor(props) {
@@ -26,29 +27,15 @@ class MapForm extends Component {
     this.state = {
       centered: false,
     }
-    this.convertTimeToMin = this.convertTimeToMin.bind(this);
-    this.getETALabel = this.getETALabel.bind(this);
+
     this.onMapDrag = this.onMapDrag.bind(this);
 
-  }
-
-  onMapDrag(){
-    console.log('outside')
-    if (this.state.centered) {
-      console.log('here')
-      this.setState(previousState => {
-          return {
-            ...previousState,
-            centered: false
-          };
-        });
-    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <ManouverBar maneuver={this.getNextManeuver().toUpperCase()} eta={this.getETALabel()}/>
+        <ManouverBar maneuver={this.getNextManeuver().toUpperCase()} eta={formatTime(this.props.currentLeg.duration.value)}/>
         <View style={styles.mapContainer}>
           <MapView
             // provider={PROVIDER_GOOGLE}
@@ -88,31 +75,32 @@ class MapForm extends Component {
           </TouchableOpacity>
 
         </View>
-
       </View>);
   }
 
-  getETALabel(){
-    let timeInMin = this.convertTimeToMin();
-    if (timeInMin >= 60) {
-      let hours = Math.floor(timeInMin/60)
-      return `${hours} hour${hours>1? 's':''} ${timeInMin%60} min.`
-    } else{
-      return `${timeInMin.toFixed(1)} min.`
+  /**
+   * Whenever is a change in the map visuals triggers the center button to be shown
+   * by updating the state of the component/=.
+   * @return {avoid}
+   */
+  onMapDrag(){
+    console.log('outside')
+    if (this.state.centered) {
+      console.log('here')
+      this.setState(previousState => {
+          return {
+            ...previousState,
+            centered: false
+          };
+        });
     }
-
   }
 
-  convertTimeToMin(){
-    if (this.props.currentLeg.duration) {
-      let timeInSeconds = this.props.currentLeg.duration.value;
-      return timeInSeconds/60;
-    }
 
-    return 0;
-
-  }
-
+  /**
+   * Gets the next maneuver to be perform while navigating
+   * @return {String} - The next maneuver text that is going to be displayed
+   */
   getNextManeuver(){
       if(this.props.currentLeg.steps ){
         for (var i = 0; i < this.props.currentLeg.steps.length; i++) {

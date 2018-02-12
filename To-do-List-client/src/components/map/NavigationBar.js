@@ -19,8 +19,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   placeText: {
+    fontFamily: "Lato",
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     color: 'white'
   }
 })

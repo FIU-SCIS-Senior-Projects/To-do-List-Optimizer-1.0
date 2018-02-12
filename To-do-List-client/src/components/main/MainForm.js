@@ -49,7 +49,7 @@ class MainForm extends Component {
   populatedListView(){
     return (
       <View style={[styles.container, styles.populatedContainer]}>
-          <OptionsBar addErrand={this.props.addErrand} route={this.props.route}/>
+          <OptionsBar eta={this.props.eta} addErrand={this.props.addErrand} route={Actions.map}/>
 
       </View>
     )

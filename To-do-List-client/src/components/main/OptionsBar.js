@@ -35,7 +35,7 @@ class OptionsBar extends Component{
           <View style={styles.textContainer}>
             <Text style={styles.etaText}>ETA  </Text>
             <Text style={styles.distanceText}>
-              21 min.
+              {`${this.props.eta}`}
             </Text>
           </View>
           <View style={styles.addButtonContainer}>

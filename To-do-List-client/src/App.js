@@ -46,12 +46,16 @@ export default class App extends Component{
               key="drawer"
               drawerImage={require('./assets/icons/navigation/Armagedon-CompassIcon.png')}
               drawerWidth={300}> */}
-              <Tabs key="tabbar"  hideTabBar>
-                  <Scene key='main'  initial={true} navBar={NavigationBarMain} component={MainScene} title='Main'/>
+              {/* <Tabs key="tabbar"  hideTabBar> */}
+                  <Scene key='main' navBar={NavigationBarMain} component={MainScene}  title='Main'/>
                   <Scene key="map"  navBar={NavigationBar} component={MapScene} title='Map'/>
                   {/* <Scene key="itinerary" component={ItineraryScene} title="Itinerary" /> */}
-              </Tabs>
-              <Scene key='entry' component={NewEntryScene} title='Entry'/>
+              {/* </Tabs> */}
+              <Scene key='entry'
+                // onExit={() => Actions.pop}
+                leftTitle="Cancel"
+                // onLeft={Actions.pop}
+                component={NewEntryScene} title='Entry'/>
             {/* </Drawer> */}
           </Stack>
       </Router>
