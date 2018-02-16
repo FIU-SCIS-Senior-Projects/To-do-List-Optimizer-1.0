@@ -45,7 +45,7 @@ export default function MapReducer(state = {
     case CENTER:
       return {
         ...state,
-        currentRegion: processCenterRegion(action.payload),
+        currentRegion: getCenterRegion(action.payload),
         overview: false}
 
     case GET_ROUTE_REQUESTED:
@@ -175,7 +175,7 @@ function calculateTotalTime(legs){
   return totalTime;
 }
 
-function processCenterRegion(coords){
+function getCenterRegion(coords){
   let processedRegion = {};
 
   processedRegion = {

@@ -14,6 +14,8 @@ import {Actions} from 'react-native-router-flux';
 import MapView from 'react-native-maps';
 import { Header } from 'react-navigation';
 
+import PlaceMarker from './PlaceMarker';
+
 import { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 
 import StartButton from './StartButton';
@@ -33,6 +35,7 @@ class MapForm extends Component {
   }
 
   render() {
+    console.log(this.props.places)
     return (
       <View style={styles.container}>
         <ManouverBar maneuver={this.getNextManeuver().toUpperCase()} eta={formatTime(this.props.currentLeg.duration.value)}/>
@@ -54,6 +57,22 @@ class MapForm extends Component {
               fillColor="rgba(255,0,200,0.5)"
               strokeWidth={4}
             />
+
+            {Object.keys(this.props.places).map((id,i ) => (
+            // <MapView.Marker
+            //   style={{width: 50, height:50}}
+            //   title={id}
+            //   image={require('../../assets/icons/map-marker-small.png')}
+            //   key={id}
+            //   coordinate={this.props.places[id].location}
+            // />
+            //
+            <MapView.Marker coordinate={this.props.places[id].location} key={i}>
+              <PlaceMarker amount={i + 1} />
+            </MapView.Marker>
+          ))
+        }
+
 
           </MapView>
           {!this.state.centered?  //if the screen is centered in the user hide the button

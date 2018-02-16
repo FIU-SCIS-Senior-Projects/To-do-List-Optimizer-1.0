@@ -39,6 +39,7 @@ class MapContainer extends Component{
   render(){
 
     let {currentRegion} =  this.props.map;
+    // let {places} = this.props.errands;
     let {overview_polyline} = this.props.map.route;
     let legs = this.props.map.route.legs;
 
@@ -48,6 +49,7 @@ class MapContainer extends Component{
         center={this.handleCenter}
         currentRegion={currentRegion}
         polyline={overview_polyline}
+        places={this.props.errands.places}
         currentLeg={legs? legs[0] : {}}/>
     );
   }
@@ -64,7 +66,8 @@ class MapContainer extends Component{
 function mapStateToProps(state) {
   return {
     map: state.map,
-    user: state.user
+    user: state.user,
+    errands: state.errands,
    };
 }
 

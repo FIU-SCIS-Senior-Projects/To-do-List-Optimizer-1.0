@@ -4,13 +4,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
 
 import RoundButton from './RoundButton';
 import OptionsBar from './OptionsBar';
+import ErrandsList from './ErrandsList'
 
 class MainForm extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class MainForm extends Component {
 
   render(){
     return(
-        !this.state.added ? this.emptyListView() : this.populatedListView()
+        !this.props.populated ? this.emptyListView() : this.populatedListView()
     );
   }
 
@@ -49,7 +50,8 @@ class MainForm extends Component {
   populatedListView(){
     return (
       <View style={[styles.container, styles.populatedContainer]}>
-          <OptionsBar eta={this.props.eta} addErrand={this.props.addErrand} route={Actions.map}/>
+          <ErrandsList order={this.props.order} errands={this.props.errands}/>
+          <OptionsBar eta={this.props.eta} addErrand={this.props.addErrand} route={this.props.route}/>
 
       </View>
     )
