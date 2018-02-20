@@ -6,47 +6,65 @@ var mongoose = require('mongoose'),
      Task    = mongoose.model('Task');
 
 /*=======================================
-* POST: Adds a new user
+* POST: Adds a new user (signup)
 =======================================*/
-exports.add_a_user = (req, res) => {
+exports.addUser = (req, res) => {
     var new_user = new User(req.body);
     new_user.save((err, user) => {
-        if(err)
-            res.send(err)
+        if(err){
+            if(err.code == 11000)
+              res.send("Email "+ req.body.email  +
+              " is already in Use, choose another email.");
+          }
         res.json(user);
     })
 };
 /*=======================================
-* GET: Returns all the users
+* GET: Search for user using email Login
 =======================================*/
-exports.list_all_users = (req, res) => {
-    User.find({}, (err, user) => {
+exports.login = (req, res) => {
+    var email = req.body.email;
+    User.find({email}, (err, user) =>{
         if(err){
-            res.send(err)
+          res.send(err);
         }
         if(user.length == 0){
-            res.json("message: empty list of users");
+          res.send("User not found");
         }
-        res.json(user);
-    });
+        res.send(user);
+    })
 };
 
 /*=======================================
+* GET: Returns all the users
+=======================================*/
+exports.listAllUsers = (req, res) => {
+  run().catch(error => console.error(error));
+
+  async function run() {
+    const users = await User.find({}).sort({name:1}).populate('places');
+    res.json(users);
+  }
+}
+/*=======================================
 * GET: Returns certain User
 =======================================*/
-exports.search_user = (req, res) => {
-    User.findById(req.params.userId, (err, user) => {
-        if(err)
-            res.send(err)
-        res.json(user);
-    })
+exports.searchUser = (req, res) => {
+  run().catch(error => console.error(error));
+
+  async function run() {
+    const user = await User.findById(req.params.userId)
+        .sort({names:1})
+        .populate('places');
+
+          res.json(user);
+  }
 }
 /*=======================================
 * POST: Updates a user
 =======================================*/
-exports.update_a_user = (req, res) => {
-    var userId = {_id:req.params.userId};
-    User.findOneAndUpdate({userId}, req.body, {new:true}, (err, user)=>{
+exports.updateUser = (req, res) => {
+    User.findOneAndUpdate({_id:req.params.userId}, req.body, {new:true}, (err, user)=>{
         if(err)
             res.send(err)
         res.json(user);
@@ -54,9 +72,8 @@ exports.update_a_user = (req, res) => {
 };
 /*=======================================
 *POST:Delete a user
-
 =======================================*/
-exports.delete_user = (req, res) => {
+exports.deleteUser = (req, res) => {
     User.remove({_id:req.params.userId}, (err,user) =>{
         if(err){res.send(err) }
         else{

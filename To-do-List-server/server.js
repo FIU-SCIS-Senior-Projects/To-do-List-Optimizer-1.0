@@ -6,7 +6,7 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 8000,
     mongoose = require('mongoose'),
-    User = require('./api/models/userSchema'), //created model loading here
+    User = require('./api/models/userSchema.js'), //created model loading here
     Place = require('./api/models/placeSchema'),
     Task = require('./api/models/taskSchema'),
     bodyParser = require('body-parser');
@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-var routes = require('./api/routes/allRoutes'); //importing rout
+var routes = require('./api/routes/allRoutes'); //importing routes
 routes(app); //register the route
 
 app.listen(port);

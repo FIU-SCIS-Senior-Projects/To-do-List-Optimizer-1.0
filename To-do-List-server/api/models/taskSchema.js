@@ -3,11 +3,11 @@ var mongoose = require('mongoose');
 var TaskSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        trim: true
+
     },
-    place :{
-      type: mongoose.Schema.Types.ObjectId, ref:'Place'
+    place:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Place'
     },
     //time_frame: TimeFrameSchema,
     completed: {

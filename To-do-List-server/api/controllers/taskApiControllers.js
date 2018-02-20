@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 /*=============================
   POST: add Tasks
 =============================*/
-exports.add_task = (req, res) => {
+exports.addTask = (req, res) => {
   Place.findById(req.params.placeId, (err, user)=>{
       if(err){
         res.send(err)
@@ -28,24 +28,24 @@ exports.add_task = (req, res) => {
 }
 /*=============================
   POST: Update Task
-  (name, place and completion)
+  [name, place and completion]
 =============================*/
-exports.update_task = (req, res) => {
-  var taskId = {_id:req.params.taskId};
-  Task.findOneAndUpdate({taskId}, req.body, {new:true}, (err, task)=>{
+exports.updateTask = (req, res) => {
+
+  Task.findOneAndUpdate(req.params.taskId, req.body, {new:true}, (err, place) =>{
     if(err)
-      res.send(err)
-    res.json(task);
+      res.json(err);
+    res.json(place);
+  });
+};
+/*=============================
+DELETE: Delete Task
+=============================*/
+exports.deleteTask =  (req, res) => {
+  Task.remove({_id:req.params.taskId}, (err, task) => {
+    if(err){res.send(err)}
+    else{
+      res.json({message:"Task Deleted"});
+    }
   })
 };
-
-/*=============================
-GET: search Task
-=============================*/
-exports.search_task = (req, res) => {
-  Task.findById(req.params.taskId, (err, task) => {
-      if(err)
-          res.send(err)
-      res.json(task);
-  })
-}

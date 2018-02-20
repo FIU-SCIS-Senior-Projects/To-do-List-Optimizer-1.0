@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 
 var PlaceSchema = new mongoose.Schema({
   name: {
@@ -6,11 +7,22 @@ var PlaceSchema = new mongoose.Schema({
       required: true,
       trim: true
   },
-   author:{
-     type: mongoose.Schema.Types.ObjectId, ref:'User'
-  }
-
-});
+  completed: {
+    type: Boolean,
+    default: false
+  },
+   author: {
+     type: mongoose.Schema.Types.ObjectId,
+     ref: 'User'
+   }}, { toObject: {virtuals:true},
+         toJSON: {virtuals:true}
+      });
+    PlaceSchema.virtual('tasks', {
+      ref: 'Task',
+      localField: '_id',
+      foreignField: 'author',
+      justOne: false
+    });
 
 var Place = mongoose.model('Place', PlaceSchema);
 module.exports = Place;

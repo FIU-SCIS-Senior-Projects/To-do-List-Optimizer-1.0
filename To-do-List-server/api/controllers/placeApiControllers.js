@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 /*=======================================
 * POST: Adds a new place
 =======================================*/
-exports.add_place = (req, res) => {
+exports.addPlace = (req, res) => {
     User.findById(req.params.userId, (err, user)=>{
         if(err){
           res.send(err)
@@ -27,25 +27,54 @@ exports.add_place = (req, res) => {
     });
 }
 /*=======================================
-    * GET: Finds a place
+    * GET: display_all places for an user
 =======================================*/
-exports.search_place = (req, res) => {
-    Place.findById(req.params.placeId, (err, place) =>{
-        if(err){
-          res.send(err)
-        }
-        res.json(place);
-    });
-}
-/*=======================================
-    * GET: display_all places
-=======================================*/
-exports.display_all = (req, res) => {
-    var user = {author:req.params.userId}
-    Place.find({user}, (err, places) =>{
+exports.displayAll = (req, res) => {
+    var user = req.params.userId;
+
+    Place.find({author: user}, (err, places) =>{
       if(err){
         res.send(err)
       }
       res.json(places);
     });
 }
+
+/*=======================================
+  * PUT : Update a place [name, location]
+=======================================*/
+exports.updatePlace = (req, res) => {
+    //console.log(req.params.placeId);
+
+    Place.findOneAndUpdate(req.params.placeId, req.body, {new:true}, (err, place) =>{
+      if(err)
+        res.json(err);
+      res.json(place);
+    });
+}
+/*=======================================
+  * PUT : Update a place [name, location]
+=======================================*/
+exports.deletePlace = (req, res) => {
+  console.log(req.params.placeId);
+
+  Place.remove({_id:req.params.placeId}, (err, user) =>{
+    if(err) {res.send(err)}
+    else {
+      res.json("Place has been Deleted");
+      //Todo remove task in the place
+    }
+  });
+}
+
+// /*=======================================
+//     * GET: Finds a place
+// =======================================*/
+// exports.search_place = (req, res) => {
+//     Place.findById(req.params.placeId, (err, place) =>{
+//         if(err){
+//           res.send(err)
+//         }
+//         res.json(place);
+//     });
+// }
