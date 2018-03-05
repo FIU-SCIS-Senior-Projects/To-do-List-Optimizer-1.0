@@ -53,6 +53,9 @@ exports.searchUser = (req, res) => {
   run().catch(error => console.error(error));
 
   async function run() {
+    if(req.params.userId.length != 24){
+      res.json("User Id is wrong");
+    }
     const user = await User.findById(req.params.userId)
         .sort({names:1})
         .populate('places');
