@@ -27,6 +27,7 @@ class MainContainer extends Component{
         {
           id: 1,
           name: 'Yerba Buena Center',
+          address: '701 Mission St, San Francisco, CA 94103',
           location:{
             latitude: 37.7850153,
             longitude: -122.4023464,
@@ -35,6 +36,7 @@ class MainContainer extends Component{
         {
           id: 2,
           name: 'Tenderloin Museum',
+          address: '398 Eddy St, San Francisco, CA 94102',
           location: {
             latitude: 37.7838734,
             longitude: -122.41418340000001
@@ -43,6 +45,7 @@ class MainContainer extends Component{
         {
           id: 3,
           name: 'Transamerica Pyramid',
+          address: '600 Montgomery St, San Francisco, CA 94111',
           location: {
             latitude:37.79518628639041,
             longitude: -122.40278005599976
@@ -99,11 +102,37 @@ class MainContainer extends Component{
           id: 101,
           description: 'Buy Soap',
           placeId: 1,
+        },
+        {
+          id: 102,
+          description: 'Buy Shampoo',
+          placeId: 1,
+        },
+        {
+          id: 103,
+          description: 'Buy Condoms',
+          placeId: 1,
+        },
+        {
+          id: 104,
+          description: 'Buy Honey',
+          placeId: 1,
+        },
+        {
+          id: 105,
+          description: 'Buy Batteries',
+          placeId: 1,
+        },
+        {
+          id: 106,
+          description: 'Buy Water',
+          placeId: 1,
         }
       ],
       destination:{
         id: 4,
         name: 'Blue Bottle Coffee',
+        address: '628 California St, San Francisco, CA 94109',
         location:{
           latitude: 37.7862376,
           longitude: -122.4047807,

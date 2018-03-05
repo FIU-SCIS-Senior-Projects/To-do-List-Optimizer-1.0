@@ -1,12 +1,8 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
-  TextInput,
   Dimensions,
-  TouchableOpacity,
   StyleSheet,
-  Image,
   FlatList,
   Platform,
   TouchableWithoutFeedback
@@ -14,46 +10,9 @@ import {
 
 import { Header } from 'react-navigation';
 
-import colors from '../../tools/colorTools';
+import CardItem from './CardItem'
 
 const {width, height} = Dimensions.get('window');
-
-// const SELECTED_HEIGHT = height - 80 - Header.HEIGHT; //the 80 is the HEIGHT of the option bar
-const NORMAL_HEIGHT = 80;
-const UNSELECTED_HEIGHT = 20;
-
-class MyListItem extends React.PureComponent {
-  _onPress = () => {
-    this.props.onPressItem(this.props.id);
-  };
-
-  _calculateSize(){
-    return height - 80 - Header.HEIGHT - (this.props.count-1)*(UNSELECTED_HEIGHT + 1)
-  }
-
-  render() {
-    let view_height = 0
-    if (this.props.selected === -1) {
-      view_height = NORMAL_HEIGHT;
-    } else if (this.props.selected === this.props.id) {
-      view_height = this._calculateSize();
-    }
-    else {
-      view_height = UNSELECTED_HEIGHT = 20;
-    }
-
-    console.log(this.props.count)
-    return (
-      <TouchableWithoutFeedback onPress={this._onPress}>
-        <View style={[styles.container, {top: -5, height:view_height, backgroundColor: colors[this.props.id%5]}]} >
-          <Text style={styles.text}>
-            {this.props.name}
-          </Text>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-}
 
 class ErrandsList extends Component{
   constructor(props){
@@ -68,52 +27,31 @@ class ErrandsList extends Component{
 
   _keyExtractor = (item, index) => item.id;
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          backgroundColor: "#000000",
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.8,
-          shadowRadius: 5,
-          elevation: 1,
-        }}
-      />
-    );
-  };
   _onPressItem = (id) => {
-    // updater functions are preferred for transactional updates
     this.setState((state) => {
       return {...state, selected: state.selected === id? -1 : id};
     });
   };
 
   _renderItem = ({item}) => (
-    <MyListItem
+    <CardItem
       id={item.id}
       count={Object.values(this.state.places).length}
       onPressItem={this._onPressItem}
       selected={this.state.selected}
+      tasks={item.tasks.map(id => {return (this.state.tasks[id])})}
       name={item.name}
+      address={item.address}
     />
   );
 
   render(){
     return(
-
       <FlatList
-        enableEmptySections
+        enableEmptySections={true}
         data={Object.values(this.state.places)}
         keyExtractor={this._keyExtractor}
-        // ItemSeparatorComponent={this.renderSeparator}
         renderItem={
-          // ({item}) => (
-          //   <View style={[styles.container, {height: UNSELECTED_HEIGHT,backgroundColor: colors[item.id%5],}]}>
-          //     <Text style={styles.text}>{item.name}</Text>
-          //   </View>
-          // )
           this._renderItem
         }
       />
@@ -139,6 +77,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
+    fontFamily: 'Lato',
+    color: 'white'
+  },
+  text_address: {
+    fontSize: 10,
     fontFamily: 'Lato',
     color: 'white'
   },

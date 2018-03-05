@@ -2,23 +2,18 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
-  TextInput,
   Dimensions,
-  TouchableOpacity,
   StyleSheet,
-  Image
 } from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 
 import RoundButton from './RoundButton';
+import {NavigationButton, AddButton} from '../Buttons';
 
 const ADD_BUTTON_DIAMETER = 50;
 const ROUTE_BUTTON_DIAMTER = 70;
 
-// const ADD_BUTTON_LEFT_MARGIN_PERCENT = 0.25;
-
-// const ADD_BUTTON_LEFT_MARGIN = width * ADD_BUTTON_LEFT_MARGIN_PERCENT;
 const ADD_BUTTON_LEFT_MARGIN = 90;
 const TEXT_LEFT_MARGIN = 20;
 
@@ -39,10 +34,10 @@ class OptionsBar extends Component{
             </Text>
           </View>
           <View style={styles.addButtonContainer}>
-            <RoundButton onPress={()=>{this.props.addErrand()}} diameter={ADD_BUTTON_DIAMETER} type='add'/>
+            <AddButton onPress={()=>{this.props.addErrand()}}/>
           </View>
           <View style={styles.routeButtonContainer}>
-              <RoundButton onPress={()=>{this.props.route()}} diameter={ROUTE_BUTTON_DIAMTER} type='route'/>
+              <NavigationButton onPress={()=>{this.props.route()}} />
           </View>
       </View>
     );
