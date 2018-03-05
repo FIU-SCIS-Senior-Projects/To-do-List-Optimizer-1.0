@@ -12,11 +12,8 @@
   import {FormLabel, FormInput} from 'react-native-elements';
   import {Actions} from 'react-native-router-flux';
 
-
-
-
-
-
+  const DEBUG = true;
+  var myConsole = (DEBUG)? console.log : function(){};
 
 
 
@@ -32,8 +29,8 @@
 
     render(){
       var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      console.log("Im here");
-      console.log(this.props.placesList.length);
+      myConsole("Im here");
+      myConsole(this.props.placesList.length);
       var dataSource = (this.props.placesList.length > 0 )?
       ds.cloneWithRows(this.props.placesList):
       ds.cloneWithRows([]);
@@ -45,7 +42,7 @@
             <ListView  dataSource={dataSource}
               renderRow={(rowData) =>
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
-                  <TouchableOpacity style={{flexDirection: 'column', backgroundColor: 'white', width: '90%'}}>
+                  <TouchableOpacity  style={{flexDirection: 'column', backgroundColor: 'white', width: '90%'}}>
                     <View style={{flexDirection: 'row'}}>
                       <Text>
                         {rowData.structured_formatting.main_text}

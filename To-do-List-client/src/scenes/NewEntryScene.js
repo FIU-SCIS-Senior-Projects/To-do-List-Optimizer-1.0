@@ -14,7 +14,7 @@ class NewEntryScene extends Component {
   render() {
     return(
       <NewEntryContainer />
-    )
+    );
   }
 
 

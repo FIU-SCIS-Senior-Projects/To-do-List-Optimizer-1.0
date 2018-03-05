@@ -16,6 +16,9 @@ import {Actions} from 'react-native-router-flux';
 import MainForm from '../components/main/MainForm';
 import NewEntryForm from '../components/entry/NewEntryForm';
 
+const DEBUG = true;
+var myConsole = (DEBUG)? console.log : function(){};
+
 
 const GOOGLE_API_KEY = "AIzaSyCq3vcvjUUk1yJKLVmE31K-0YRaQptm61Q";
 
@@ -90,6 +93,7 @@ class NewEntryContainer extends Component{
     }
 
     handleResponse(response){
+      myConsole(response);
       if (response.status == "OK"){
         this.setState({
           response: response.predictions
@@ -98,10 +102,6 @@ class NewEntryContainer extends Component{
     }
 
   }
-
-
-
-
 
 
   function mapStateToProps(state) {
