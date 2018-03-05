@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
@@ -17,10 +15,6 @@ class MainForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      added: false
-    }
-
     this.emptyListView = this.emptyListView.bind(this);
     this.populatedListView = this.populatedListView.bind(this);
   }
@@ -31,16 +25,12 @@ class MainForm extends Component {
     );
   }
 
-
   emptyListView(){
     return (
       <View style={[styles.container, styles.emptyContainer]}>
         <RoundButton
         diameter={75}
         onPress = {()=>{
-          this.setState(previousState => {
-              return { added: true };
-            });
             this.props.addErrand();
             }
           }/>
@@ -52,7 +42,6 @@ class MainForm extends Component {
       <View style={[styles.container, styles.populatedContainer]}>
           <ErrandsList order={this.props.order} errands={this.props.errands}/>
           <OptionsBar eta={this.props.eta} addErrand={this.props.addErrand} route={this.props.route}/>
-
       </View>
     )
   }
