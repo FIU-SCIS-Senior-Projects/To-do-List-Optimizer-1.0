@@ -14,7 +14,6 @@ const {width, height} = Dimensions.get('window');
 class RoundButton extends Component{
   constructor(props){
     super(props);
-    console.log(props);
 
     this.state = {
       text: '+',

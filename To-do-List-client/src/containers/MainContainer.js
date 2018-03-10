@@ -15,8 +15,8 @@ import {Actions} from 'react-native-router-flux';
 
 import MainForm from '../components/main/MainForm';
 import ErrandsList from '../components/main/ErrandsList';
-import {formatTime} from '../tools/timeTools';
-
+import {formatTime} from '../tools/conversionTools';
+import {isEmpty} from '../tools/ApiTools'
 
 class MainContainer extends Component{
   constructor(props){
@@ -51,46 +51,15 @@ class MainContainer extends Component{
             longitude: -122.40278005599976
           }
         },
-        // {
-        //   id: 5,
-        //   name: 'asdasd Pyramid',
-        //   location: {
-        //     latitude:37.79518628639041,
-        //     longitude: -122.40278005599976
-        //   }
-        // },
-        // {
-        //   id: 6,
-        //   name: 'Traasdsadasid',
-        //   location: {
-        //     latitude:37.79518628639041,
-        //     longitude: -122.40278005599976
-        //   }
-        // },
-        // {
-        //   id: 7,
-        //   name: 'Transamerica Pyramid',
-        //   location: {
-        //     latitude:37.79518628639041,
-        //     longitude: -122.40278005599976
-        //   }
-        // },
-        // {
-        //   id: 8,
-        //   name: 'Transamerica Pyramid',
-        //   location: {
-        //     latitude:37.79518628639041,
-        //     longitude: -122.40278005599976
-        //   }
-        // },
-        // {
-        //   id: 9,
-        //   name: 'Transamerica Pyramid',
-        //   location: {
-        //     latitude:37.79518628639041,
-        //     longitude: -122.40278005599976
-        //   }
-        // }
+        {
+          id: 4,
+          name: 'Blue Bottle Coffee',
+          address: '628 California St, San Francisco, CA 94109',
+          location:{
+            latitude: 37.7862376,
+            longitude: -122.4047807,
+          }
+        },
       ],
       tasks:[
         {
@@ -129,21 +98,12 @@ class MainContainer extends Component{
           placeId: 1,
         }
       ],
-      destination:{
-        id: 4,
-        name: 'Blue Bottle Coffee',
-        address: '628 California St, San Francisco, CA 94109',
-        location:{
-          latitude: 37.7862376,
-          longitude: -122.4047807,
-        }
-      },
       updated: false
     }
 
     this.handleRoute = this.handleRoute.bind(this);
     this.handleAddErrand = this.handleAddErrand.bind(this);
-    this.something = this.something.bind(this);
+    this.handleMap =  this.handleMap.bind(this);
   }
 
   componentWillMount(){
@@ -158,7 +118,9 @@ class MainContainer extends Component{
   }
 
   componentDidUpdate(){
-    if (this.props.errands.places && this.props.user.location.coords && !this.state.updated) {
+
+    if (!isEmpty(this.props.errands.places) && this.props.user.location.coords && !this.state.updated) {
+
       this.setState((prev) =>{
         return {...prev, updated: true}
       });
@@ -171,15 +133,16 @@ class MainContainer extends Component{
         populated={Object.keys(this.props.errands.places).length > 0? true : false}
         eta={formatTime(this.props.map.route.total_time)}
         addErrand={this.handleAddErrand}
-        route={this.something}
+        map={this.handleMap}
         errands={this.props.errands}
-        order={this.props.map.route.waypoint_order}/>
+        order={this.props.map.route.waypoint_order}
+        navigating={this.props.map.navigating}/>
+
     );
   }
 
 
   handleAddErrand(){
-
     this.state.places.forEach((place) => {
       this.props.Actions.addPlace(place);
     })
@@ -196,11 +159,11 @@ class MainContainer extends Component{
 
   handleRoute() {
     this.props.Actions.getRouteRequested();
-    this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, this.state.destination, true);
+    this.props.Actions.getRoute(this.props.user.location.coords, this.props.errands.places, true);
   }
 
-  something(){
-    this.props.Actions.center(this.props.user.location.coords)
+  handleMap(){
+    this.props.Actions.overview();
     Actions.map();
   }
 }

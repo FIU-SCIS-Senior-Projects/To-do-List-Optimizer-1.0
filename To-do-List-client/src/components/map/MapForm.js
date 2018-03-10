@@ -19,8 +19,10 @@ import PlaceMarker from './PlaceMarker';
 import { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 
 import StartButton from './StartButton';
-import ManouverBar from './ManouverBar';
-import {formatTime} from '../../tools/timeTools';
+import ManeuverBar from './ManeuverBar';
+import ControlBar from './ControlBar'
+import {formatTime} from '../../tools/conversionTools';
+
 
 class MapForm extends Component {
   constructor(props) {
@@ -35,10 +37,11 @@ class MapForm extends Component {
   }
 
   render() {
-    console.log(this.props.places)
+    let {map} = this.props;
+    console.log(map)
     return (
       <View style={styles.container}>
-        <ManouverBar maneuver={this.getNextManeuver().toUpperCase()} eta={formatTime(this.props.currentLeg.duration.value)}/>
+
         <View style={styles.mapContainer}>
           <MapView
             // provider={PROVIDER_GOOGLE}
@@ -75,7 +78,19 @@ class MapForm extends Component {
 
 
           </MapView>
-          {!this.state.centered?  //if the screen is centered in the user hide the button
+          <ControlBar
+            isNavigating  = {map.navigating}
+            navigate      = {this.props.navigate}
+            summary       = {map.route.summary}
+            totalDistance = {map.route.total_distance}
+            totalTime     = {map.route.total_time}
+            destination   = {map.route.destination}
+          />
+            {/* <ManeuverBar maneuver={this.getNextManeuver().toUpperCase()} eta={formatTime(this.props.currentLeg.duration.value)}/> */}
+
+            <ManeuverBar />
+
+          {/* {!this.state.centered?  //if the screen is centered in the user hide the button
           <TouchableOpacity
             style={[styles.round, styles.button, {bottom: 80, right: 10}]}
             onPress={() => {this.setState(prev => {return {...prev, centered: true}});this.props.center()}}>
@@ -91,7 +106,7 @@ class MapForm extends Component {
               style={{width: 25, height: 25}}
               resizeMode="contain"
               source={ require('../../assets/icons/navigation/overview.png')}></Image>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
         </View>
       </View>);
@@ -138,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: Dimensions.get('window').height - Header.HEIGHT - 70, //70 from the navigation bar
+    height: Dimensions.get('window').height - Header.HEIGHT, //70 from the navigation bar
   },
   container_1:{
     flex: 1,
@@ -165,7 +180,7 @@ const styles = StyleSheet.create({
   map: {
     flexDirection: 'column',
      width: Dimensions.get('window').width,
-     height: Dimensions.get('window').height - Header.HEIGHT - 70,
+     height: Dimensions.get('window').height - Header.HEIGHT,
     // ...StyleSheet.absoluteFillObject
   },
   round: {

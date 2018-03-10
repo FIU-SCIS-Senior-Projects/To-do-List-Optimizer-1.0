@@ -41,7 +41,12 @@ class MainForm extends Component {
     return (
       <View style={[styles.container, styles.populatedContainer]}>
           <ErrandsList order={this.props.order} errands={this.props.errands}/>
-          <OptionsBar eta={this.props.eta} addErrand={this.props.addErrand} route={this.props.route}/>
+          <OptionsBar
+            eta={this.props.eta}
+            navigating={this.props.navigating}
+            addErrand={this.props.addErrand}
+            map={this.props.map}/>
+
       </View>
     )
   }

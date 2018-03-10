@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-// import FontAwesome, { Icons } from 'react-native-fontawesome';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
 
 /******************************************************************************
 * CONSTANTS
@@ -29,9 +29,9 @@ export class NavigationButton extends Component {
       <TouchableOpacity
         style={[styles.roundButton,
                 styles.navigationButton,
-                styles.navigationNotStarted]}
+                this.props.navigating? styles.navigationStarted: styles.navigationNotStarted]}
         onPress={() => this.props.onPress()}>
-        <Text style={styles.text}>Start</Text>
+        <Text style={styles.text}>{this.props.navigating? "MAP" : "START"}</Text>
       </TouchableOpacity>
     );
   }
@@ -52,7 +52,9 @@ export class AddButton extends Component {
         style={[styles.roundButton,
                 styles.addButton]}
         onPress={() => this.props.onPress()}>
-        <Text style={styles.text}>+</Text>
+        <Text style={styles.text}>
+          <FontAwesome>{Icons.plus}</FontAwesome>
+        </Text>
       </TouchableOpacity>
     );
   }
@@ -91,10 +93,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#3EFF8E',
   },
   navigationStarted:{
-    backgroundColor: '#3EFF8E',
+    backgroundColor: '#57B0D8',
   },
   text:{
-    fontSize: 16,
-    color: 'black'
+    fontSize: 18,
+    color: 'black',
+    fontWeight: '100',
   },
 })

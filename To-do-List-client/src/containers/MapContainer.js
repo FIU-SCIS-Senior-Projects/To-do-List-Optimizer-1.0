@@ -18,6 +18,7 @@ class MapContainer extends Component{
 
     this.handleOverview = this.handleOverview.bind(this);
     this.handleCenter = this.handleCenter.bind(this);
+    this.handleNavigation = this.handleNavigation.bind(this);
   }
 /**
  * TODO: Getting the route before the component is mounted.
@@ -47,10 +48,13 @@ class MapContainer extends Component{
       <MapForm
         overview={this.handleOverview}
         center={this.handleCenter}
+        navigate={this.handleNavigation}
+        map = {this.props.map}
         currentRegion={currentRegion}
         polyline={overview_polyline}
         places={this.props.errands.places}
-        currentLeg={legs? legs[0] : {}}/>
+        currentLeg={legs? legs[0] : {}}
+        isNavigating={this.props.map.navigating}/>
     );
   }
 
@@ -60,6 +64,17 @@ class MapContainer extends Component{
 
   handleCenter() {
     this.props.Actions.center(this.props.user.location.coords);
+  }
+
+  handleNavigation(){
+    if (this.props.map.navigating) {
+      this.props.Actions.stopNavigation();
+      this.props.Actions.overview();
+    } else {
+      this.props.Actions.startNavigation();
+      this.props.Actions.center(this.props.user.location.coords);
+    }
+
   }
 }
 

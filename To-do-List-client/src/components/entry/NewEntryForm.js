@@ -29,8 +29,8 @@
 
     render(){
       var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      myConsole("Im here");
-      myConsole(this.props.placesList.length);
+      // myConsole("Im here");
+      // myConsole(this.props.placesList.length);
       var dataSource = (this.props.placesList.length > 0 )?
       ds.cloneWithRows(this.props.placesList):
       ds.cloneWithRows([]);

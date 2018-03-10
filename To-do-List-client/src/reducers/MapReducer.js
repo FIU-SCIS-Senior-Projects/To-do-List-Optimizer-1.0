@@ -7,7 +7,9 @@ import {
   GET_ROUTE_SUCCESS,
   GET_ROUTE_FAILURE,
   OVERVIEW,
-  CENTER
+  CENTER,
+  START_NAVIGATION,
+  STOP_NAVIGATION,
 } from '../actions/actions';
 
 const {width, height} = Dimensions.get('window');
@@ -52,6 +54,7 @@ export default function MapReducer(state = {
       return {...state, isRouting: true};
 
     case GET_ROUTE_SUCCESS:
+      console.log(action.payload)
       return {
         ...state,
         isRouting: false,
@@ -60,6 +63,12 @@ export default function MapReducer(state = {
 
     case GET_ROUTE_FAILURE:
       return {...state, isRouting: false, error: action.payload.error};
+
+    case START_NAVIGATION:
+      return {...state, navigating: true};
+
+    case STOP_NAVIGATION:
+      return {...state, navigating: false};
 
     default:
       return state;
@@ -146,8 +155,6 @@ function convertGoogleResponse(route){
       longitudeDelta: longitude_difference + DELTA_MARGIN,
     },
   },
-  total_distance: calculateTotalDistance(route.legs),
-  total_time: calculateTotalTime(route.legs), //in seconds
   overview_polyline: decodePoints(route.overview_polyline.points),
 }
 
@@ -155,25 +162,6 @@ return processedRoute;
 
 }
 
-function calculateTotalDistance(legs){
-  let totalDistance = 0;  //in feet
-
-  legs.forEach((leg) => {
-    totalDistance += leg.distance.value;
-  });
-
-  return totalDistance;
-}
-
-function calculateTotalTime(legs){
-  let totalTime = 0;  //in seconds
-
-  legs.forEach((leg) => {
-    totalTime += leg.duration.value;
-  });
-
-  return totalTime;
-}
 
 function getCenterRegion(coords){
   let processedRegion = {};

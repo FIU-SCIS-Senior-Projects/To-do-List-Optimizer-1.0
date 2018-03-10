@@ -1,4 +1,6 @@
-
+METER_TO_FEET   = 3.28084;
+MILES_TO_FOOT   = 5280;
+MIN_TO_SECONDS  = 60;
 export function formatTime(timeInSeconds){
   var {hours, minutes} = convertTime(timeInSeconds);
 
@@ -8,6 +10,11 @@ export function formatTime(timeInSeconds){
     return `${minutes.toFixed(1)} min${minutes>1? 's':''}.`
   }
 }
+
+
+/******************************************************************************
+* TIME TOOLS
+******************************************************************************/
 
 /**
  * [convertTime description]
@@ -42,12 +49,31 @@ export function convertSecondsToMin(timeInSeconds){
 export function convertMinToHours(timeInMin){
 
   if (timeInMin >= 60) {
-    var hours = Math.floor(timeInMin/60)
-    var remaindingMin = timeInMin%60;
+    var hours         = Math.floor(timeInMin / MIN_TO_SECONDS)
+    var remaindingMin = timeInMin % MIN_TO_SECONDS;
     return {hours:hours, minutes:remaindingMin}
 
   } else{
     return {hours:0, minutes:timeInMin}
   }
+}
 
+/******************************************************************************
+* DISTANCE TOOLS
+******************************************************************************/
+
+export function convertDistance(distanceInMeters){
+  var distanceInFeet = convertMetersToFeet(distanceInMeters)
+  var miles = Math.floor(distanceInFeet/MILES_TO_FOOT)
+  var foot  = distanceInFeet % MILES_TO_FOOT
+  return {miles: miles, foot: foot }
+}
+
+
+export function convertFeetToMiles(distanceInFeet){
+  return distanceInFeet * FEET_TO_MILES;
+}
+
+export function convertMetersToFeet(distanceInMeters){
+  return distanceInMeters * METER_TO_FEET;
 }

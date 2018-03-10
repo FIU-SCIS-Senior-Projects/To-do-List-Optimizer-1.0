@@ -37,7 +37,7 @@ class OptionsBar extends Component{
             <AddButton onPress={()=>{this.props.addErrand()}}/>
           </View>
           <View style={styles.routeButtonContainer}>
-              <NavigationButton onPress={()=>{this.props.route()}} />
+              <NavigationButton onPress={()=>{this.props.map()}} navigating={this.props.navigating} />
           </View>
       </View>
     );
