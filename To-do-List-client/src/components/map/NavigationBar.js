@@ -73,7 +73,7 @@ export default class Navigationbar extends Component {
     return (
         <View style={styles.container}>
           { this._renderLeft() }
-          { this._renderMiddle() }
+          {/* { this._renderMiddle() } */}
           { this._renderRight() }
         </View>
     )

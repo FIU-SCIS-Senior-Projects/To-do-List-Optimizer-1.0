@@ -22,6 +22,7 @@ import Images from '../../tools/Images'
 const ICONS_FOLDER_PATH           = '../../assets/icons/maneuvers/'
 const MANEUVER_CONTAINER_HEIGHT   = 70;
 const DIRECTIONS_CONTAINER_HEIGHT = 50;
+const IMAGE_DIMENSIONS            = 60;
 
 const TIME_TO_HIDE_DIRECTIONS     = 5000;  // Time in ms
 
@@ -71,6 +72,12 @@ class ManeuverBar extends Component{
                 }
               </Text>
             </View>
+            <View style={styles.nextPlaceContainer}>
+              <Text style={styles.boldText}>
+                {this.props.nextPlace}
+              </Text>
+            </View>
+
           </View>
 
           {/* This banner will appear with a more human readable instruction */}
@@ -97,6 +104,7 @@ ManeuverBar.propTypes = {
   distanceToManeuver: PropTypes.number,
   destination:        PropTypes.string,
   directions:         PropTypes.string,
+  nextPlace:          PropTypes.string,
 };
 ManeuverBar.defaultProps = {
   isNavigating:       false,
@@ -140,6 +148,13 @@ const styles = StyleSheet.create({
     padding:          10,
     borderRadius:     15,
   },
+  nextPlaceContainer: {
+    flexDirection:    'column',
+    justifyContent:   'center',
+    alignItems:       'center',
+    position:         'absolute',
+    right:            10,
+  },
   boldText: {
     fontSize:           18,
     fontWeight:         'bold',
@@ -151,8 +166,8 @@ const styles = StyleSheet.create({
     fontFamily:         'Lato',
   },
   image: {
-    width:              60,
-    height:             60,
+    width:              IMAGE_DIMENSIONS,
+    height:             IMAGE_DIMENSIONS,
   }
 })
 export default ManeuverBar;

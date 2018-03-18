@@ -90,10 +90,12 @@ class MapForm extends Component {
           {this.props.map.navigating ?
             <ManeuverBar
               isNavigating        = {map.navigating}
-              maneuver            = {this.state.currentLeg.steps[1].maneuver ?
-                                    this.state.currentLeg.steps[1].maneuver : 'none' }
-              directions          = {this.state.currentLeg.steps[1].html_instructions}
-              distanceToManeuver  = {this.state.currentLeg.steps[1].distance.value}
+              maneuver            = {this.state.currentLeg.steps[0].maneuver ?
+                                    this.state.currentLeg.steps[0].maneuver : 'none' }
+              directions          = {this.state.currentLeg.steps[0].html_instructions}
+              distanceToManeuver  = {this.state.currentLeg.steps[0].distance.value}
+              nextPlace           = {this.props.map.route.nonDestinationPlaces[
+                                      this.props.map.route.waypoint_order[0]].name}
             />
           : null }
 

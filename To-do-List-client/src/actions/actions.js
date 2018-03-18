@@ -53,10 +53,11 @@ export function getRoute(current, places, optimize) {
 
     })
 
-    var bestTime        = 0;
-    var placeIndex      = 0;
-    var tempResults     = {};
-    var tempDestination = {};
+    var bestTime             = 0;
+    var placeIndex           = 0;
+    var tempResults          = {};
+    var tempDestination      = {};
+    var nonDestinationPlaces = []
 
     // Make all the API calls at the same time and waits for all the responses
     Promise.all(promises).then( function(responses){
@@ -68,14 +69,18 @@ export function getRoute(current, places, optimize) {
 
         if (bestTime) {
           if (totalTime < bestTime) {
-            bestTime = totalTime;
-            tempResults = response;
-            tempDestination = arrPlaces[index];
+            bestTime              = totalTime;
+            tempResults           = response;
+            tempDestination       = arrPlaces[index];
+            nonDestinationPlaces  = arrPlaces.filter((place) =>
+                                      place.id !== arrPlaces[index].id)
           }
         } else {
-          bestTime = totalTime;
-          tempResults = response;
-          tempDestination = arrPlaces[index];
+          bestTime                = totalTime;
+          tempResults             = response;
+          tempDestination         = arrPlaces[index];
+          nonDestinationPlaces    = arrPlaces.filter((place) =>
+                                    place.id !== arrPlaces[index].id)
         }
 
         index += 1;
@@ -84,9 +89,10 @@ export function getRoute(current, places, optimize) {
       // dispatches the best response with the lowest time
       dispatch(getRouteSuccess({
         ...tempResults,
-        total_time: bestTime,
-        total_distance:  calculateTotalDistance(tempResults.legs),
-        destination: tempDestination,
+        total_time:           bestTime,
+        total_distance:       calculateTotalDistance(tempResults.legs),
+        destination:          tempDestination,
+        nonDestinationPlaces: nonDestinationPlaces,
       }));
     }).catch((error) => {
             dispatch(getRouteFailure(error));
