@@ -6,13 +6,15 @@ import {
   Dimensions,
   TouchableOpacity,
   StyleSheet,
-  Image
+  Image,
 } from 'react-native';
 
 import PropTypes from 'prop-types';
 
 const {width, height} = Dimensions.get('window');
 import Maneuvers from '../../tools/Maneuvers'
+import {convertTime, convertDistance} from '../../tools/conversionTools';
+import Images from '../../tools/Images'
 
 /******************************************************************************
 * Constants
@@ -27,8 +29,11 @@ class ManeuverBar extends Component{
   constructor(props){
     super(props);
 
+    // TODO: check that the Image that is being passed exists, if it doesnt,
+    //       handle it.
     this.state = {
-      showDirections: true,
+      showDirections:     true,
+      distanceToManeuver: convertDistance(this.props.distanceToManeuver),
     }
   }
 
@@ -41,49 +46,61 @@ class ManeuverBar extends Component{
   }
 
   render(){
-    return(
-      <View style={styles.container}>
-        {/* This holds the Icon of the manouver and the maneuver itself */}
-        <View style={styles.maneuverContainer}>
-          <Image
-            style={styles.image}
-            resizeMode="contain"
-            source={ require('../../assets/icons/maneuvers/straight.png')}>
-          </Image>
-          <View>
-            <Text style={styles.boldText}>
-              {Maneuvers[this.props.maneuver]}
-            </Text>
-            <Text style={styles.normalText}>
-              3.2 mi
-            </Text>
+
+      return(
+        <View style={styles.container}>
+          {/* This holds the Icon of the manouver and the maneuver itself */}
+          <View style={styles.maneuverContainer}>
+            <Image
+              style={styles.image}
+              resizeMode="contain"
+              source={ Images[this.props.maneuver]}>
+            </Image>
+            <View>
+              <Text style={styles.boldText}>
+                {Maneuvers[this.props.maneuver]}
+              </Text>
+              <Text style={styles.normalText}>
+                {this.state.distanceToManeuver.miles > 0 ?
+                  this.state.distanceToManeuver.miles :
+                  this.state.distanceToManeuver.foot.toFixed(1)
+                }
+                {this.state.distanceToManeuver.miles > 0 ?
+                 ` mi` :
+                 ` feet`
+                }
+              </Text>
+            </View>
           </View>
+
+          {/* This banner will appear with a more human readable instruction */}
+          {this.state.showDirections?
+            <View style={styles.directionsContainer}>
+              <Text style={styles.normalText}>
+                {this.props.directions.replace(/(<([^>]+)>)/g, "")}
+              </Text>
+            </View>
+          : null}
+
         </View>
-
-        {/* This banner will appear with a more human readable instruction */}
-        {this.state.showDirections?
-          <View style={styles.directionsContainer}>
-
-          </View>
-        : null}
-
-      </View>
-    );
-  }
-}
+      );
+  } // End of render
+} // End of ManeuverBar class
 
 /******************************************************************************
 * Props Setup
 ******************************************************************************/
 
 ManeuverBar.propTypes = {
+  isNavigating:       PropTypes.bool,
   maneuver:           PropTypes.string,
-  distanceToManeuver: PropTypes.string,
+  distanceToManeuver: PropTypes.number,
   destination:        PropTypes.string,
   directions:         PropTypes.string,
 };
 ManeuverBar.defaultProps = {
-  maneuver:           'straight',
+  isNavigating:       false,
+  maneuver:           'none',
   distanceToManeuver: 'N/A',
   destination:        'N/A',
   directions:         '',

@@ -38,10 +38,6 @@ class MapContainer extends Component{
   }
 
   render(){
-
-    let {currentRegion} =  this.props.map;
-    // let {places} = this.props.errands;
-    let {overview_polyline} = this.props.map.route;
     let legs = this.props.map.route.legs;
 
     return(
@@ -50,11 +46,9 @@ class MapContainer extends Component{
         center={this.handleCenter}
         navigate={this.handleNavigation}
         map = {this.props.map}
-        currentRegion={currentRegion}
-        polyline={overview_polyline}
         places={this.props.errands.places}
         currentLeg={legs? legs[0] : {}}
-        isNavigating={this.props.map.navigating}/>
+        />
     );
   }
 

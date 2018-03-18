@@ -4,7 +4,8 @@
 const Maneuvers = {
   'straight':   'Keep Straight',
   'turn-left':  'Take a Left',
-  'turn-right': 'Take a Right'
+  'turn-right': 'Take a Right',
+  'none':       '',
 }
 
 export default Maneuvers;

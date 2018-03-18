@@ -12,6 +12,10 @@ import {
 import PropTypes from 'prop-types';
 import {convertTime, convertDistance} from '../../tools/conversionTools';
 
+/******************************************************************************
+* CONSTANTS
+******************************************************************************/
+
 const {width, height} = Dimensions.get('window');
 
 class ControlBar extends Component {
@@ -20,24 +24,62 @@ class ControlBar extends Component {
 
     // converting time and distance values to readable formatTime
     this.state = {
-      totalTime:     convertTime(this.props.totalTime),
-      totalDistance: convertDistance(this.props.totalDistance),
+      totalTime:        convertTime(this.props.totalTime),
+      totalDistance:    convertDistance(this.props.totalDistance),
+      timeToPlace:      convertTime(this.props.timeToPlace),
+      distanceToPlace:  convertDistance(this.props.distanceToPlace),
     }
     // Binding functions
     this._navigationView  = this._navigationView.bind(this);
     this._setupView       = this._setupView.bind(this);
   }
 
+  /*
+    TODO: Add Resume button and End Button when the end button is pressed once
+   */
+
   /**
    * It renders the menu when the user already started the navigation
    * @return {JSX}
    */
   _navigationView(){
+    console.log(this.state.timeToPlace)
     return(
       <View style={navStyles.container}>
         <View style={navStyles.LeftContainer}>
-          <Text style={[styles.boldText,{margin: 5}]}>{this.props.timeToPlace}</Text>
-          <Text style={[styles.boldText, {margin: 5}]}>{this.props.distanceToPlace}</Text>
+          <View style={styles.container}>
+            {/* Value text */}
+            <Text style={[styles.boldText,{margin: 5, textAlign:'center'}]}>
+              {this.props.timeToPlace.hours > 0 ?
+              `${this.state.timeToPlace.hours}` :
+              `${this.state.timeToPlace.minutes.toFixed(0)}`}
+            </Text>
+
+            {/* Unit text */}
+            <Text style={[styles.normalText, {textAlign:'center'}]}>
+              {this.state.timeToPlace.hours > 0 ?
+                 `hour${this.state.timeToPlace.hours > 1 ? 's' : ''}` :
+                  `min${this.state.timeToPlace.minutes > 1 ? 's' : ''}`}
+            </Text>
+          </View>
+
+          <View style={[styles.container]}>
+            {/* Value text */}
+            <Text style={[styles.boldText, {margin: 5, textAlign:'center'}]}>
+              {this.state.distanceToPlace.miles > 0 ?
+                this.state.distanceToPlace.miles :
+                this.state.distanceToPlace.foot.toFixed(1)
+              }
+            </Text>
+
+            {/* Unit Text */}
+            <Text style={[styles.normalText, {textAlign:'center'}]}>
+               {this.state.distanceToPlace.miles > 0 ?
+                `mi` :
+                `feet`
+               }
+            </Text>
+          </View>
         </View>
         <View style={navStyles.RightContainer}>
           <TouchableOpacity
@@ -108,8 +150,8 @@ class ControlBar extends Component {
     {
       return this._setupView();
     }
-  }
-}
+  } // End of render
+} // End of ControlBar class
 
 /******************************************************************************
 * Props Setup
@@ -150,28 +192,37 @@ ControlBar.defaultProps = {
 * Styles
 ******************************************************************************/
 
+// Styles for general purposes
 const styles = StyleSheet.create({
+  container:{
+    flexDirection:      'column',
+    flex:               1,
+    justifyContent:     'center',
+    alignContent:       'center',
+  },
   boldText: {
     fontSize:           18,
     fontWeight:         'bold',
     fontFamily:         'Lato',
   },
   normalText: {
-    marginTop:          5,
     fontSize:           12,
     fontFamily:         'Lato',
   },
-})         // Styles for general purposes
+})
+
+// Styles before navigation
 const setupStyles = StyleSheet.create({
     container: {
       position:         'absolute',
       bottom:           5,
-      height:           '40%',
+      height:           '30%',
       width:            '98%',
       justifyContent:   'center',
       alignItems:       'center',
       backgroundColor:  'rgba(255,255,255,0.99)',
       padding:          10,
+      paddingTop:       2,
       borderRadius:     15,
     },
     topSectionContainer: {
@@ -210,9 +261,11 @@ const setupStyles = StyleSheet.create({
       width:            '90%',
       backgroundColor:  '#4BD965',
       borderRadius:     10,
-    }
+    },
 
-})    // Styles before navigation
+})
+
+// Styles for navigation
 const navStyles = StyleSheet.create({
     container: {
       flexDirection:    'row',
@@ -246,6 +299,6 @@ const navStyles = StyleSheet.create({
       backgroundColor:  '#FE4648',
       borderRadius:     10,
     }
-  })      // Styles for navigation
+  })
 
 export default ControlBar;

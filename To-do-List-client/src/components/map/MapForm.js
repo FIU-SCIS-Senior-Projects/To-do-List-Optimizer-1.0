@@ -20,42 +20,50 @@ import { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 
 import StartButton from './StartButton';
 import ManeuverBar from './ManeuverBar';
-import ControlBar from './ControlBar'
-import {formatTime} from '../../tools/conversionTools';
+import ControlBar from './ControlBar';
+
+const CENTER_BUTTON_SIDE = 50;
 
 
 class MapForm extends Component {
   constructor(props) {
     super(props);
 
+    var {legs} = this.props.map.route
+    var currentLeg = legs ? legs[0] : {};
+    // Getting the current portion of the trip (leg)
     this.state = {
-      centered: false,
+      centered:     false,
+      currentLeg:   currentLeg,
+      currentStep:  currentLeg.steps[0],
+      timeToPlace:  currentLeg.duration.value,
+      // maneuver:     this.getNextManeuver(currentLeg),
     }
 
-    this.onMapDrag = this.onMapDrag.bind(this);
-
+    // Binding functions
+    this.onMapDrag        = this.onMapDrag.bind(this);
+    this.getNextManeuver  = this.getNextManeuver.bind(this);
   }
 
   render() {
     let {map} = this.props;
-    console.log(map)
+
     return (
       <View style={styles.container}>
-
         <View style={styles.mapContainer}>
           <MapView
             // provider={PROVIDER_GOOGLE}
             style={styles.map}
-            initialRegion={this.props.currentRegion}
+            initialRegion={this.props.map.currentRegion}
             scrollEnabled={true}
             showsUserLocation={true}
-            region={this.props.currentRegion}
+            region={this.props.map.currentRegion}
             onTouchStart={(e) => this.onMapDrag()}
           >
 
             <MapView.Polyline
               key={0}
-              coordinates={this.props.polyline}
+              coordinates={this.props.map.route.overview_polyline}
               strokeColor="#077"
               fillColor="rgba(255,0,200,0.5)"
               strokeWidth={4}
@@ -75,20 +83,40 @@ class MapForm extends Component {
             </MapView.Marker>
           ))
         }
-
-
           </MapView>
-          <ControlBar
-            isNavigating  = {map.navigating}
-            navigate      = {this.props.navigate}
-            summary       = {map.route.summary}
-            totalDistance = {map.route.total_distance}
-            totalTime     = {map.route.total_time}
-            destination   = {map.route.destination}
-          />
-            {/* <ManeuverBar maneuver={this.getNextManeuver().toUpperCase()} eta={formatTime(this.props.currentLeg.duration.value)}/> */}
 
-            <ManeuverBar />
+
+          {/* Top bar that contains the maneuver that the user has to make */}
+          {this.props.map.navigating ?
+            <ManeuverBar
+              isNavigating        = {map.navigating}
+              maneuver            = {this.state.currentLeg.steps[1].maneuver ?
+                                    this.state.currentLeg.steps[1].maneuver : 'none' }
+              directions          = {this.state.currentLeg.steps[1].html_instructions}
+              distanceToManeuver  = {this.state.currentLeg.steps[1].distance.value}
+            />
+          : null }
+
+          {/* Center Button */}
+          <TouchableOpacity
+            style={styles.centerButton}>
+
+          </TouchableOpacity>
+
+          {/* Bottom bar that has the times and distances to places. Allows stop
+            * and start navigation.
+            */}
+          <ControlBar
+            isNavigating    = {this.props.map.navigating}
+            navigate        = {this.props.navigate}
+            summary         = {map.route.summary}
+            totalDistance   = {map.route.total_distance}
+            totalTime       = {map.route.total_time}
+            destination     = {map.route.destination}
+            distanceToPlace = {this.state.currentLeg.distance.value}
+            timeToPlace     = {this.state.currentLeg.duration.value}
+          />
+
 
           {/* {!this.state.centered?  //if the screen is centered in the user hide the button
           <TouchableOpacity
@@ -135,11 +163,12 @@ class MapForm extends Component {
    * Gets the next maneuver to be perform while navigating
    * @return {String} - The next maneuver text that is going to be displayed
    */
-  getNextManeuver(){
-      if(this.props.currentLeg.steps ){
-        for (var i = 0; i < this.props.currentLeg.steps.length; i++) {
-          if (this.props.currentLeg.steps[i].maneuver) {
-            return this.props.currentLeg.steps[i].maneuver;
+  getNextManeuver(currentLeg){
+    let {steps} = currentLeg;
+      if(steps){
+        for (var i = 0; i < steps.length; i++) {
+          if (steps[i].maneuver) {
+            return steps[i].maneuver;
           }
         }
       }
@@ -149,52 +178,29 @@ class MapForm extends Component {
 }
 
 const styles = StyleSheet.create({
-  mapContainer:{
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: Dimensions.get('window').height - Header.HEIGHT, //70 from the navigation bar
-  },
-  container_1:{
-    flex: 1,
-
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 70,
-    width: Dimensions.get('window').width,
-    top: 0,
-
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-  },
   container: {
-
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection:    'column',
+    justifyContent:   'center',
+    alignItems:       'center'
+  },
+  mapContainer:{
+    flexDirection:    'column',
+    justifyContent:   'center',
+    alignItems:       'center',
+    height:           Dimensions.get('window').height - Header.HEIGHT, //70 from the navigation bar
   },
   map: {
-    flexDirection: 'column',
-     width: Dimensions.get('window').width,
-     height: Dimensions.get('window').height - Header.HEIGHT,
-    // ...StyleSheet.absoluteFillObject
+  flexDirection:      'column',
+   width:              Dimensions.get('window').width,
+   height:             Dimensions.get('window').height - Header.HEIGHT,
   },
-  round: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'rgba(255,255,255,0.7)',
-    borderRadius: 30
-
-  },
-  button: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-
+  centerButton: {
+    position:         'relative',
+    bottom:           5,
+    height:           CENTER_BUTTON_SIDE,
+    width:            CENTER_BUTTON_SIDE,
+    borderRadius:     10,
+    backgroundColor:  'rgba(255,255,255,0.99)',
   },
 });
 
