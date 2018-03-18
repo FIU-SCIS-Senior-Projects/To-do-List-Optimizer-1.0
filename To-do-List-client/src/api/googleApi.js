@@ -1,4 +1,5 @@
-const BASE_URL = 'https://maps.googleapis.com/maps/api/directions/json?';
+const BASE_DIRECTIONS_URL = 'https://maps.googleapis.com/maps/api/directions/json?';
+const BASE_DISTANCE_URL = 'https://maps.googleapis.com/maps/api/distancematrix/json?';
 
 
 /**
@@ -30,11 +31,37 @@ export function getRoute(current, places, destination, optimize) {
     }
   );
 
-  var url = `${BASE_URL}${origin}${destination}${optimization}${query}`;
+  var url = `${BASE_DIRECTIONS_URL}${origin}${destination}${optimization}${query}`;
   return fetch(url)
   .then(response => response.json())
   .then(responseJson => {
     return responseJson.routes[0];
+  }).catch(e => {
+    console.warn(e)
+  });
+}
+
+/**
+ * Connects to the Google API to get the distance between two points. It uses
+ * DistanceMatrix Api.
+ * @param  {object} origin      - The origin place. Usually the user
+ * @param  {object} destination - The destination place. Usually the nearest Place
+ * @return {[type]}             [description]
+ */
+export function getDistance(origin, destination){
+
+  // creates the origin part of the query
+  var origin        = `origins=${origin.location.latitude},${destination.location.longitude}`;
+
+  // creates the destination part of the query
+  var destination   = `&destinations=${destination.location.latitude},${destination.location.longitude}`;
+
+  var url = `${BASE_DISTANCE_URL}${origin}${destination}`;
+
+  return fetch(url)
+  .then(response => response.json())
+  .then(responseJson => {
+    return responseJson;
   }).catch(e => {
     console.warn(e)
   });

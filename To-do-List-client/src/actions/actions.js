@@ -3,22 +3,25 @@ import {calculateTotalTime} from '../tools/ApiTools'
 import {calculateTotalDistance} from '../tools/ApiTools'
 
 // Map actions declaration
-export const GET_ROUTE_REQUESTED  = 'GET_ROUTE_REQUESTED';
-export const GET_ROUTE_SUCCESS    = 'GET_ROUTE_SUCCESS';
-export const GET_ROUTE_FAILURE    = 'GET_ROUTE_FAILURE';
+export const GET_ROUTE_REQUESTED    = 'GET_ROUTE_REQUESTED';
+export const GET_ROUTE_SUCCESS      = 'GET_ROUTE_SUCCESS';
+export const GET_ROUTE_FAILURE      = 'GET_ROUTE_FAILURE';
 
-export const OVERVIEW = 'OVERVIEW';
-export const CENTER = 'CENTER';
+export const OVERVIEW               = 'OVERVIEW';
+export const CENTER                 = 'CENTER';
 
-export const START_NAVIGATION = 'START_NAVIGATION';
-export const STOP_NAVIGATION = 'STOP_NAVIGATION';
+export const START_NAVIGATION       = 'START_NAVIGATION';
+export const STOP_NAVIGATION        = 'STOP_NAVIGATION';
 
 // User actions declaration
-export const UPDATE_LOCATION = 'UPDATE_LOCATION';
+export const UPDATE_LOCATION        = 'UPDATE_LOCATION';
+export const GET_DISTANCE_REQUESTED = 'GET_DISTANCE_REQUESTED'
+export const GET_DISTANCE_SUCCESS   = 'GET_DISTANCE_SUCCESS'
+export const GET_DISTANCE_FAILURE   = 'GET_DISTANCE_FAILURE'
 
 // Errands actions declaration
-export const ADD_PLACE = 'ADD_PLACE';
-export const ADD_TASK = 'ADD_TASK';
+export const ADD_PLACE              = 'ADD_PLACE';
+export const ADD_TASK               = 'ADD_TASK';
 
 
 
@@ -155,6 +158,36 @@ export function updateLocation(location) {
   };
 };
 
+export function getDistanceToPlace(origin, destination){
+  return (dispatch) => {
+    googleApi.getDistance(origin, destination)
+    .then( (result) => {
+      dispatch(getDistanceSuccess(result.rows[0].elements[0].distance.value));
+    }).catch((error) => {
+            dispatch(getDistanceFailure(error));
+        })
+  }
+}
+
+export function getDistanceRequested() {
+  return {
+    type: GET_DISTANCE_REQUESTED
+  };
+};
+
+export function getDistanceSuccess(distance) {
+  return {
+    type: GET_DISTANCE_SUCCESS,
+    payload: { distance }
+  };
+};
+
+export function getDistanceFailure(error) {
+  return {
+    type: GET_DISTANCE_FAILURE,
+    payload: { error }
+  };
+};
 /******************************************************************************
 * ERRANDS ACTIONS
 ******************************************************************************/

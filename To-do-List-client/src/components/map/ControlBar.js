@@ -43,7 +43,6 @@ class ControlBar extends Component {
    * @return {JSX}
    */
   _navigationView(){
-    console.log(this.state.timeToPlace)
     return(
       <View style={navStyles.container}>
         <View style={navStyles.LeftContainer}>

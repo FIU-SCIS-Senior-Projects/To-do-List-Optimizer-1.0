@@ -54,7 +54,6 @@ export default function MapReducer(state = {
       return {...state, isRouting: true};
 
     case GET_ROUTE_SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         isRouting: false,

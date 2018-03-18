@@ -33,10 +33,11 @@ class MapForm extends Component {
     var currentLeg = legs ? legs[0] : {};
     // Getting the current portion of the trip (leg)
     this.state = {
-      centered:     false,
-      currentLeg:   currentLeg,
-      currentStep:  currentLeg.steps[0],
-      timeToPlace:  currentLeg.duration.value,
+      centered:       false,
+      currentLeg:     currentLeg,
+      currentStep:    currentLeg.steps[0],
+      timeToPlace:    currentLeg.duration.value,
+      arrivedToPlace: this.props.user.distanceToPlace < 20,
       // maneuver:     this.getNextManeuver(currentLeg),
     }
 
@@ -47,6 +48,8 @@ class MapForm extends Component {
 
   render() {
     let {map} = this.props;
+
+
 
     return (
       <View style={styles.container}>
