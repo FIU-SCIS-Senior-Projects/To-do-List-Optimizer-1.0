@@ -132,7 +132,57 @@ class MainContainer extends Component{
           id: 106,
           description: 'Buy Water',
           placeId: 1,
-        }
+        },
+        {
+          id: 107,
+          description: 'Buy Wires',
+          placeId: 1,
+        },
+        {
+          id: 108,
+          description: 'Buy Cement',
+          placeId: 1,
+        },
+        {
+          id: 109,
+          description: 'Buy Bucket',
+          placeId: 1,
+        },
+        {
+          id: 110,
+          description: 'Buy Light',
+          placeId: 1,
+        },
+        {
+          id: 111,
+          description: 'Buy Glue',
+          placeId: 1,
+        },
+        {
+          id: 112,
+          description: 'Buy Plants',
+          placeId: 1,
+        },
+        {
+          id: 113,
+          description: 'Buy Fridge',
+          placeId: 1,
+        },
+        {
+          id: 114,
+          description: 'Buy Pot ground',
+          placeId: 1,
+        },
+        {
+          id: 115,
+          description: 'Buy Paint',
+          placeId: 1,
+        },
+        {
+          id: 116,
+          description: 'Buy paintBrush',
+          placeId: 1,
+        },
       ],
       updated: false
     }

@@ -6,11 +6,11 @@
  * require statments.
  */
 export default {
-  'straight':     require('../assets/icons/maneuvers/straight.png'),
-  'turn-left':    require('../assets/icons/maneuvers/turn-left.png'),
-  'turn-right':   require('../assets/icons/maneuvers/turn-right.png'),
+  'straight':           require('../assets/icons/maneuvers/straight.png'),
+  'turn-left':          require('../assets/icons/maneuvers/turn-left.png'),
+  'turn-right':         require('../assets/icons/maneuvers/turn-right.png'),
   'turn-sharp-right':   require('../assets/icons/maneuvers/sharp-right-turn.png'),
-  'turn-sharp-left':   require('../assets/icons/maneuvers/sharp-left-turn.png'),
-  'none':         require('../assets/icons/maneuvers/none.png'),
+  'turn-sharp-left':    require('../assets/icons/maneuvers/sharp-left-turn.png'),
+  'none':               require('../assets/icons/maneuvers/none.png'),
 
 }

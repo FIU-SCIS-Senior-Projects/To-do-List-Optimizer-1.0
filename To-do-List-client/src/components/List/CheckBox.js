@@ -2,12 +2,11 @@ import React, {Component} from 'react'
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
   Image,
 } from 'react-native';
+
 
 import PropTypes from 'prop-types';
 
@@ -34,7 +33,7 @@ export default class CheckBox extends Component {
       (previousState) =>
       {
           return {
-              checked: !previousState.checked
+            checked:  !previousState.checked,
           };
       });
   }
@@ -46,7 +45,7 @@ export default class CheckBox extends Component {
         <TouchableOpacity
           style    ={styles.checkButton}
           onPress  ={() => {
-              this.props.onChange(!this.state.checked);
+              this.props.onChange(!this.state.checked, this.props.entity);
               this.toggle();
             }
           }
@@ -73,9 +72,7 @@ export default class CheckBox extends Component {
 
 const styles = StyleSheet.create({
   container:{
-    // flex:               1,
     flexDirection:      'row',
-    // justifyContent:     'center',
     alignContent:       'center',
     padding:            5,
     width:              '100%',
@@ -84,7 +81,6 @@ const styles = StyleSheet.create({
   textContainer: {
     paddingLeft:        10,
     justifyContent:     'center',
-    // alignContent:       'center',
   },
   checkButton: {
     flexDirection:      'column',
@@ -94,7 +90,7 @@ const styles = StyleSheet.create({
 
   },
   image: {
-    height:             90,
+    height:             40,
     width:              40,
   },
   boldText: {
@@ -115,8 +111,10 @@ const styles = StyleSheet.create({
 
 CheckBox.propTypes = {
   onChange:           PropTypes.func,
+  onChangeText:       PropTypes.func,
   label:              PropTypes.string,
   style:              PropTypes.object,
+  entity:             PropTypes.object,
 };
 CheckBox.defaultProps = {
   label:              'label',

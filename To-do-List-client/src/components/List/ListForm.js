@@ -11,6 +11,7 @@ import {
 
 import {Actions} from 'react-native-router-flux';
 import CheckBox from './CheckBox';
+import TaskList from './TaskList';
 
 class ListForm extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class ListForm extends Component {
   }
 
   render(){
-    console.log(this.props)
+
     return(
       <View style={styles.container}>
         {/* Current Place Header */}
@@ -29,10 +30,8 @@ class ListForm extends Component {
 
         {/* List of Tasks */}
         <View style = {styles.tasksContainer}>
-          <CheckBox
-            style     = {{width:'80%'}}
-            label     = 'Nail Gun'
-            onChange  = {(checked) => console.log(checked)}
+          <TaskList
+            tasks = {this.props.tasks}
           />
         </View>
 
@@ -48,6 +47,11 @@ class ListForm extends Component {
     );
   }
 }
+
+
+/******************************************************************************
+* Styles
+******************************************************************************/
 
 const styles = StyleSheet.create({
   container: {
@@ -102,5 +106,9 @@ const styles = StyleSheet.create({
     color:              'black',
   },
 });
+
+/******************************************************************************
+* Props Setup
+******************************************************************************/
 
 export default ListForm;
