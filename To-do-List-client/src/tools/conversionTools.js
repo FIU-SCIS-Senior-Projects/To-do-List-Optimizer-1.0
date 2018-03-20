@@ -5,7 +5,7 @@ export function formatTime(timeInSeconds){
   var {hours, minutes} = convertTime(timeInSeconds);
 
   if (hours >= 1) {
-    return `${hours} hour${hours>1? 's':''} ${minutes} min${minutes>1? 's':''}.`
+    return `${hours} hour${hours>1? 's':''} ${minutes.toFixed(1)} min${minutes>1? 's':''}.`
   } else{
     return `${minutes.toFixed(1)} min${minutes>1? 's':''}.`
   }

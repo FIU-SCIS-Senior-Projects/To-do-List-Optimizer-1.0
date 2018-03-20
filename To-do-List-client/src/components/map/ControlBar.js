@@ -117,7 +117,7 @@ class ControlBar extends Component {
           <View style={setupStyles.bottomSectionLeft}>
             <Text style={styles.boldText}>
               {this.state.totalTime.hours ? `${this.state.totalTime.hours} h `:''}
-              {`${this.state.totalTime.minutes} mins`}
+              {`${this.state.totalTime.minutes.toFixed(0)} mins`}
             </Text>
             <Text style={styles.normalText}>
               {this.state.totalDistance.miles ?

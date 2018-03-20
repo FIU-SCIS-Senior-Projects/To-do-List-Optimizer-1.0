@@ -9,7 +9,7 @@ import {
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as ActionCreators from '../actions/actions';
-
+import {Actions} from 'react-native-router-flux';
 import MapForm from '../components/map/MapForm';
 
 class MapContainer extends Component{
@@ -20,6 +20,7 @@ class MapContainer extends Component{
     this.handleCenter = this.handleCenter.bind(this);
     this.handleNavigation = this.handleNavigation.bind(this);
     this.handleDistance = this.handleDistance.bind(this);
+    this.handleArrivedToPlace = this.handleArrivedToPlace.bind(this);
   }
 /**
  * TODO: Getting the route before the component is mounted.
@@ -49,6 +50,7 @@ class MapContainer extends Component{
         map = {this.props.map}
         user = {this.props.user}
         places={this.props.errands.places}
+        arrived = {this.handleArrivedToPlace}
         currentLeg={legs? legs[0] : {}}
         />
     );
@@ -69,6 +71,7 @@ class MapContainer extends Component{
     this.props.Actions.getDistanceRequested();
     this.props.Actions.getDistanceToPlace(origin, destination);
   }
+
   handleNavigation(){
     if (this.props.map.navigating) {
       this.props.Actions.stopNavigation();
@@ -77,7 +80,13 @@ class MapContainer extends Component{
       this.props.Actions.startNavigation();
       this.props.Actions.center(this.props.user.location.coords);
     }
+  }
 
+  handleArrivedToPlace(){
+    Actions.list({
+      placeId: this.props.map.route.nonDestinationPlaces[
+                              this.props.map.route.waypoint_order[0]].id,
+    });
   }
 }
 

@@ -122,7 +122,14 @@ class MapForm extends Component {
             timeToPlace     = {this.state.currentLeg.duration.value}
           />
 
-
+          <TouchableOpacity
+            style={{position: 'absolute', bottom: 100, right: 10}}
+            onPress={() => {this.props.arrived()}}>
+            <Image
+              style={{width: 25, height: 25}}
+              resizeMode="contain"
+              source={ require('../../assets/icons/navigation/overview.png')}></Image>
+          </TouchableOpacity>
           {/* {!this.state.centered?  //if the screen is centered in the user hide the button
           <TouchableOpacity
             style={[styles.round, styles.button, {bottom: 80, right: 10}]}

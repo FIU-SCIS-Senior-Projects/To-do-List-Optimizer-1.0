@@ -47,7 +47,7 @@ class ManeuverBar extends Component{
   }
 
   render(){
-
+      console.log(this.props.maneuver)
       return(
         <View style={styles.container}>
           {/* This holds the Icon of the manouver and the maneuver itself */}

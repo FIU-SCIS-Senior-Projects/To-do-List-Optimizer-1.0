@@ -24,40 +24,76 @@ class MainContainer extends Component{
 
     this.state = {
       places:[
+        // {
+        //   id: 1,
+        //   name: 'Yerba Buena Center',
+        //   address: '701 Mission St, San Francisco, CA 94103',
+        //   location:{
+        //     latitude: 37.7850153,
+        //     longitude: -122.4023464,
+        //   }
+        // },
+        // {
+        //   id: 2,
+        //   name: 'Tenderloin Museum',
+        //   address: '398 Eddy St, San Francisco, CA 94102',
+        //   location: {
+        //     latitude: 37.7838734,
+        //     longitude: -122.41418340000001
+        //   }
+        // },
+        // {
+        //   id: 3,
+        //   name: 'Transamerica Pyramid',
+        //   address: '600 Montgomery St, San Francisco, CA 94111',
+        //   location: {
+        //     latitude:37.79518628639041,
+        //     longitude: -122.40278005599976
+        //   }
+        // },
+        // {
+        //   id: 4,
+        //   name: 'Blue Bottle Coffee',
+        //   address: '628 California St, San Francisco, CA 94109',
+        //   location:{
+        //     latitude: 37.7862376,
+        //     longitude: -122.4047807,
+        //   }
+        // },
         {
           id: 1,
-          name: 'Yerba Buena Center',
-          address: '701 Mission St, San Francisco, CA 94103',
+          name: 'Home Depot',
+          address: '11305 SW 40th St, Miami, FL 33165',
           location:{
-            latitude: 37.7850153,
-            longitude: -122.4023464,
+            latitude: 25.7346975,
+            longitude: -80.37806330000001,
           }
         },
         {
           id: 2,
-          name: 'Tenderloin Museum',
-          address: '398 Eddy St, San Francisco, CA 94102',
+          name: 'Pollo Tropical',
+          address: '13998 SW 56th St, Miami, FL 33175',
           location: {
-            latitude: 37.7838734,
-            longitude: -122.41418340000001
+            latitude: 25.7138318,
+            longitude: -80.41999929999997
           }
         },
         {
           id: 3,
-          name: 'Transamerica Pyramid',
-          address: '600 Montgomery St, San Francisco, CA 94111',
+          name: 'Navarro Pharmacy Discount',
+          address: '14491 SW 42nd St, Miami, FL 33175',
           location: {
-            latitude:37.79518628639041,
-            longitude: -122.40278005599976
+            latitude:25.7293617,
+            longitude: -80.4292618
           }
         },
         {
           id: 4,
-          name: 'Blue Bottle Coffee',
-          address: '628 California St, San Francisco, CA 94109',
+          name: 'MetroPCS',
+          address: '14055 SW 88th St, Miami, FL 33186',
           location:{
-            latitude: 37.7862376,
-            longitude: -122.4047807,
+            latitude: 25.687298,
+            longitude: -80.42092819999999,
           }
         },
       ],
@@ -65,27 +101,27 @@ class MainContainer extends Component{
         {
           id: 100,
           description: 'Buy Vitamins',
-          placeId: 1,
+          placeId: 3,
         },
         {
           id: 101,
           description: 'Buy Soap',
-          placeId: 1,
+          placeId: 3,
         },
         {
           id: 102,
           description: 'Buy Shampoo',
-          placeId: 1,
+          placeId: 3,
         },
         {
           id: 103,
           description: 'Buy Condoms',
-          placeId: 1,
+          placeId: 3,
         },
         {
           id: 104,
           description: 'Buy Honey',
-          placeId: 1,
+          placeId: 3,
         },
         {
           id: 105,
@@ -109,6 +145,11 @@ class MainContainer extends Component{
   componentWillMount(){
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log('updating location')
+        if (!isEmpty(this.props.errands.places) && this.props.user.location.coords && !this.state.updated) {
+          console.log('updating Ropute within location')
+          this.handleRoute();
+        }
         this.props.Actions.updateLocation(position);
       },
       (error) => this.setState({ error: error.message }),

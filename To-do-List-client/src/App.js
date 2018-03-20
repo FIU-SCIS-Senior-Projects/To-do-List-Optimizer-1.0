@@ -29,6 +29,7 @@ import MainScene from './scenes/MainScene';
 import MapScene from './scenes/MapScene';
 import NewEntryScene from './scenes/NewEntryScene';
 import ItineraryScene from './scenes/ItineraryScene';
+import ListScene from './scenes/ListScene';
 
 import TabIcon from './components/Tab';
 import NavigationBar from './components/map/NavigationBar'
@@ -39,6 +40,9 @@ export default class App extends Component{
     return (
       <Provider store={store}>
         <Router>
+          <Modal key="modal"
+            hideNavBar
+          >
           <Stack key='root'>
             <Scene key='login' initial={true} component={LoginScene} title='Login' direction="vertical"/>
             {/* <Drawer
@@ -58,6 +62,15 @@ export default class App extends Component{
                 component={NewEntryScene} title='Entry'/>
             {/* </Drawer> */}
           </Stack>
+          <Scene
+            key="list"
+            component={ListScene}
+            title="List"
+            // onExit={() => console.log('onExit')}
+            // leftTitle="Cancel"
+            // onLeft={Actions.pop}
+          />
+        </Modal>
       </Router>
     </Provider>
     );
