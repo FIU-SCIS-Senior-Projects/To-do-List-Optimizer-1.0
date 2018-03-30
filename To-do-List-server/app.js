@@ -10,7 +10,7 @@ var Task = require('./api/models/taskSchema');
 var bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://milonga:eshijadelcandombe@ds249707.mlab.com:49707/armageddon_project_db');
+mongoose.connect('mongodb://milonga:eshijadelcandombe@ds249707.mlab.com:49707/armageddon_project_db', { useMongoClient: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +26,7 @@ routes(app); //register the route
 
 app.listen(port);
 console.log("*************************************************");
-console.log('todo list RESTful API server started on: ' + port);
+console.log('RESTful API Started on: ' + port);
 
 app.get('*', function(req, res){
   res.send('Page not found!!!', 404);
