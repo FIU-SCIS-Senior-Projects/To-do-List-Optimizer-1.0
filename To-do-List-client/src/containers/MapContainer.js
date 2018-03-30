@@ -12,31 +12,53 @@ import * as ActionCreators from '../actions/actions';
 import {Actions} from 'react-native-router-flux';
 import MapForm from '../components/map/MapForm';
 
+MINIMUM_ARRIVAL_DISTANCE = 20;
 class MapContainer extends Component{
   constructor(props){
     super(props);
 
+    this.state = {
+      arrived: false,
+    }
+
+    // Binding functions
     this.handleOverview = this.handleOverview.bind(this);
     this.handleCenter = this.handleCenter.bind(this);
     this.handleNavigation = this.handleNavigation.bind(this);
     this.handleDistance = this.handleDistance.bind(this);
     this.handleArrivedToPlace = this.handleArrivedToPlace.bind(this);
   }
-/**
- * TODO: Getting the route before the component is mounted.
- */
-  componentWillMount() {
-    // this.props.Actions.getRoute(current, places, destination, true)
-  }
 
-  componentDidMount() {
-    this.watchID = navigator.geolocation.watchPosition(position => {
-      this.props.Actions.updateLocation(position);
-    });
-  }
 
+  componentWillMount(){
+    // We want to update the user location everytime it changes so we can update
+    // the route
+    this.watchId = navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.Actions.updateLocation(position);
+        this.props.Actions.getRouteRequested();
+        this.props.Actions.getRoute(this.props.user.location.coords,
+                                    this.props.errands.places,
+                                    true);
+        this.setState({
+          arrived: this.props.map.route.legs[0].distance.value < MINIMUM_ARRIVAL_DISTANCE,
+         })
+
+      }
+      //,
+      // (error) => this.setState({ error: error.message }),
+      // { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
+
+  }
+  componentDidUpdate(){
+    if (this.state.arrived) {
+      this.handleArrivedToPlace();
+    }
+  }
   componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchID);
+    // When component gets unmounted clear the watch on the user.
+    navigator.geolocation.clearWatch(this.watchId);
   }
 
   render(){
@@ -44,14 +66,14 @@ class MapContainer extends Component{
 
     return(
       <MapForm
-        overview={this.handleOverview}
-        center={this.handleCenter}
-        navigate={this.handleNavigation}
-        map = {this.props.map}
-        user = {this.props.user}
-        places={this.props.errands.places}
-        arrived = {this.handleArrivedToPlace}
-        currentLeg={legs? legs[0] : {}}
+        overview    = {this.handleOverview}
+        center      = {this.handleCenter}
+        navigate    = {this.handleNavigation}
+        map         = {this.props.map}
+        user        = {this.props.user}
+        places      = {this.props.errands.places}
+        arrived     = {this.handleArrivedToPlace}
+        currentLeg  = {legs? legs[0] : {}}
         />
     );
   }

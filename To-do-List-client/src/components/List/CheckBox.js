@@ -20,7 +20,7 @@ export default class CheckBox extends Component {
     super(props);
 
     this.state = {
-      checked:  false,
+      checked:  this.props.checked,
     }
   }
 
@@ -39,7 +39,6 @@ export default class CheckBox extends Component {
   }
 
   render(){
-
     return (
       <View style={[styles.container, this.props.style]}>
         <TouchableOpacity
@@ -115,8 +114,10 @@ CheckBox.propTypes = {
   label:              PropTypes.string,
   style:              PropTypes.object,
   entity:             PropTypes.object,
+  checked:            PropTypes.bool,
 };
 CheckBox.defaultProps = {
   label:              'label',
+  checked:            false,
   style:              {},
 };

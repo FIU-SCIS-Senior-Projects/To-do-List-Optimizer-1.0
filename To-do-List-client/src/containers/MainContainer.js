@@ -96,91 +96,117 @@ class MainContainer extends Component{
             longitude: -80.42092819999999,
           }
         },
+        // {
+        //   id: 5,
+        //   name: 'FIU PG6',
+        //   address: 'Miami, Fl, 33174',
+        //   location:{
+        //     latitude: 25.759654,
+        //     longitude: -80.374031,
+        //   }
+        // },
       ],
       tasks:[
         {
           id: 100,
           description: 'Buy Vitamins',
+          completed: false,
           placeId: 3,
         },
         {
           id: 101,
           description: 'Buy Soap',
+          completed: false,
           placeId: 3,
         },
         {
           id: 102,
           description: 'Buy Shampoo',
+          completed: false,
           placeId: 3,
         },
         {
           id: 103,
           description: 'Buy Condoms',
+          completed: false,
           placeId: 3,
         },
         {
           id: 104,
           description: 'Buy Honey',
+          completed: false,
           placeId: 3,
         },
         {
           id: 105,
           description: 'Buy Batteries',
+          completed: false,
           placeId: 1,
         },
         {
           id: 106,
           description: 'Buy Water',
+          completed: false,
           placeId: 1,
         },
         {
           id: 107,
           description: 'Buy Wires',
+          completed: false,
           placeId: 1,
         },
         {
           id: 108,
           description: 'Buy Cement',
+          completed: false,
           placeId: 1,
         },
         {
           id: 109,
           description: 'Buy Bucket',
+          completed: false,
           placeId: 1,
         },
         {
           id: 110,
           description: 'Buy Light',
+          completed: false,
           placeId: 1,
         },
         {
           id: 111,
           description: 'Buy Glue',
+          completed: false,
           placeId: 1,
         },
         {
           id: 112,
           description: 'Buy Plants',
+          completed: false,
           placeId: 1,
         },
         {
           id: 113,
           description: 'Buy Fridge',
+          completed: false,
           placeId: 1,
         },
         {
           id: 114,
           description: 'Buy Pot ground',
+          completed: true,
           placeId: 1,
         },
         {
           id: 115,
           description: 'Buy Paint',
+          completed: false,
           placeId: 1,
         },
         {
           id: 116,
           description: 'Buy paintBrush',
+          completed: false,
           placeId: 1,
         },
       ],
@@ -193,7 +219,7 @@ class MainContainer extends Component{
   }
 
   componentWillMount(){
-    navigator.geolocation.getCurrentPosition(
+    this.watchId = navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log('updating location')
         if (!isEmpty(this.props.errands.places) && this.props.user.location.coords && !this.state.updated) {
@@ -207,6 +233,10 @@ class MainContainer extends Component{
     );
 
   }
+
+  componentWillUnmount() {
+     navigator.geolocation.clearWatch(this.watchId);
+   }
 
   componentDidUpdate(){
 

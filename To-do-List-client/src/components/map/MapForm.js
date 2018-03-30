@@ -37,8 +37,7 @@ class MapForm extends Component {
       currentLeg:     currentLeg,
       currentStep:    currentLeg.steps[0],
       timeToPlace:    currentLeg.duration.value,
-      arrivedToPlace: this.props.user.distanceToPlace < 20,
-      // maneuver:     this.getNextManeuver(currentLeg),
+      arrivedToPlace: false,
     }
 
     // Binding functions
@@ -56,20 +55,20 @@ class MapForm extends Component {
         <View style={styles.mapContainer}>
           <MapView
             // provider={PROVIDER_GOOGLE}
-            style={styles.map}
-            initialRegion={this.props.map.currentRegion}
-            scrollEnabled={true}
-            showsUserLocation={true}
-            region={this.props.map.currentRegion}
-            onTouchStart={(e) => this.onMapDrag()}
+            style             = {styles.map}
+            initialRegion     = {this.props.map.currentRegion}
+            scrollEnabled     = {true}
+            showsUserLocation = {true}
+            region            = {this.props.map.currentRegion}
+            onTouchStart      = {(e) => this.onMapDrag()}
           >
 
             <MapView.Polyline
-              key={0}
-              coordinates={this.props.map.route.overview_polyline}
-              strokeColor="#077"
-              fillColor="rgba(255,0,200,0.5)"
-              strokeWidth={4}
+              key         = {0}
+              coordinates = {this.props.map.route.overview_polyline}
+              strokeColor = "#077"
+              fillColor   = "rgba(255,0,200,0.5)"
+              strokeWidth = {4}
             />
 
             {Object.keys(this.props.places).map((id,i ) => (
@@ -93,20 +92,20 @@ class MapForm extends Component {
           {this.props.map.navigating ?
             <ManeuverBar
               isNavigating        = {map.navigating}
-              maneuver            = {this.state.currentLeg.steps[0].maneuver ?
-                                    this.state.currentLeg.steps[0].maneuver : 'none' }
-              directions          = {this.state.currentLeg.steps[0].html_instructions}
-              distanceToManeuver  = {this.state.currentLeg.steps[0].distance.value}
+              maneuver            = {this.state.currentLeg.steps[1].maneuver ?
+                                    this.state.currentLeg.steps[1].maneuver : 'none' }
+              directions          = {this.state.currentLeg.steps[1].html_instructions}
+              distanceToManeuver  = {this.state.currentLeg.steps[1].distance.value}
               nextPlace           = {this.props.map.route.nonDestinationPlaces[
                                       this.props.map.route.waypoint_order[0]].name}
             />
           : null }
 
           {/* Center Button */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.centerButton}>
 
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* Bottom bar that has the times and distances to places. Allows stop
             * and start navigation.
@@ -123,12 +122,13 @@ class MapForm extends Component {
           />
 
           <TouchableOpacity
-            style={{position: 'absolute', bottom: 100, right: 10}}
-            onPress={() => {this.props.arrived()}}>
+            style           = {{position: 'absolute', bottom: 100, right: 10}}
+            onPress         = {() => {this.props.arrived()}}>
             <Image
-              style={{width: 25, height: 25}}
-              resizeMode="contain"
-              source={ require('../../assets/icons/navigation/overview.png')}></Image>
+              style         = {{width: 25, height: 25}}
+              resizeMode    = "contain"
+              source        = {require('../../assets/icons/navigation/overview.png')}>
+            </Image>
           </TouchableOpacity>
           {/* {!this.state.centered?  //if the screen is centered in the user hide the button
           <TouchableOpacity
@@ -199,12 +199,12 @@ const styles = StyleSheet.create({
     flexDirection:    'column',
     justifyContent:   'center',
     alignItems:       'center',
-    height:           Dimensions.get('window').height - Header.HEIGHT, //70 from the navigation bar
+    height:           Dimensions.get('window').height - Header.HEIGHT//70 from the navigation bar
   },
   map: {
-  flexDirection:      'column',
-   width:              Dimensions.get('window').width,
-   height:             Dimensions.get('window').height - Header.HEIGHT,
+    flexDirection:    'column',
+    width:            Dimensions.get('window').width,
+    height:           Dimensions.get('window').height - Header.HEIGHT,
   },
   centerButton: {
     position:         'relative',
