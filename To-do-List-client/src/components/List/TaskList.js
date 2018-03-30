@@ -21,11 +21,12 @@ export default class TaskList extends Component{
   _keyExtractor = (task) => task.id;
 
   _renderItem = ({item}) => {
-    console.log(item)
+    console.log(item.completed)
     return (
       <View style={styles.container}>
         <CheckBox
           style     = {{width: '80%'}}
+          checked   = {item.completed}
           label     = {item.description}
           onChange  = {(checked, entity) => console.log(entity)}
           entity    = {item}

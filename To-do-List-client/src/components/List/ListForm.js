@@ -13,15 +13,52 @@ import {Actions} from 'react-native-router-flux';
 import CheckBox from './CheckBox';
 import TaskList from './TaskList';
 
+DRAG_DOWN_IMAGE = require('../../assets/icons/drag-down-arrow.png');
+
 class ListForm extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      tasks: this.props.tasks,
+    }
+  }
+
+  _completeAllTasks(){
+    this.setState((prevState) => {
+      var tasks = prevState.tasks;
+
+      tasks.forEach(function(task, index) {
+        tasks[index] = {
+          ...tasks[index],
+          completed: true
+        }
+      });
+
+      return {
+        tasks: tasks
+      }
+    })
+
   }
 
   render(){
-
     return(
       <View style={styles.container}>
+        {/* Drag Down */}
+        <View style = {styles.dragDownContainer}>
+          <TouchableOpacity
+              onPress     = {Actions.pop}
+            >
+            <Image
+              style       = {styles.image}
+              resizeMode  = "contain"
+              source      = {DRAG_DOWN_IMAGE}
+              >
+            </Image>
+          </TouchableOpacity>
+        </View>
+
         {/* Current Place Header */}
         <View style = {styles.placeNameContainer}>
           <Text style={styles.boldText}>{this.props.place.name}</Text>
@@ -31,15 +68,15 @@ class ListForm extends Component {
         {/* List of Tasks */}
         <View style = {styles.tasksContainer}>
           <TaskList
-            tasks = {this.props.tasks}
+            tasks = {this.state.tasks}
           />
         </View>
 
         {/* Controls */}
         <View style = {styles.controlContainer}>
-          <TouchableOpacity style = {styles.backButton} onPress={Actions.pop}>
+          <TouchableOpacity style = {styles.backButton} onPress={() => {this._completeAllTasks()}}>
             <Text style = {styles.buttonText}>
-              DONE
+              COMPLETE ALL
             </Text>
           </TouchableOpacity>
         </View>
@@ -72,7 +109,15 @@ const styles = StyleSheet.create({
     // justifyContent:   "center",
     alignItems:       "center",
     width:            '100%',
-    height:           '80%',
+    height:           '70%',
+  },
+  dragDownContainer: {
+    flexDirection:    'column',
+    justifyContent:   "center",
+    alignItems:       "center",
+    padding:          5,
+    width:            '100%',
+    height:           '10%',
   },
   controlContainer: {
     flexDirection:    'row',
@@ -104,6 +149,10 @@ const styles = StyleSheet.create({
     fontSize:           16,
     fontFamily:         'Lato',
     color:              'black',
+  },
+  image: {
+    height:             30,
+    width:              30,
   },
 });
 
