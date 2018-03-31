@@ -109,6 +109,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 10,
     elevation: 1,
+    borderTopLeftRadius:  10,
+    borderTopRightRadius: 10,
   },
   text: {
     fontSize: 16,

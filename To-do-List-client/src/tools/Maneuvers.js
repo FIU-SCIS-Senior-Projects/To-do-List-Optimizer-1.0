@@ -7,7 +7,7 @@ const Maneuvers = {
   'turn-right':         'Take a Right',
   'turn-sharp-right':   'Take a Sharp Right',
   'turn-sharp-left':    'Take a Sharp Left',
-  'none':       '',
+  'none':       'Start navigation',
 }
 
 export default Maneuvers;

@@ -11,14 +11,6 @@ const {width, height} = Dimensions.get('window');
 import RoundButton from './RoundButton';
 import {NavigationButton, AddButton} from '../Buttons';
 
-const ADD_BUTTON_DIAMETER = 50;
-const ROUTE_BUTTON_DIAMTER = 70;
-
-const ADD_BUTTON_LEFT_MARGIN = 90;
-const TEXT_LEFT_MARGIN = 20;
-
-const DESIRED_RIGHT_MARGIN = 20;
-
 class OptionsBar extends Component{
   constructor(props){
     super(props);
@@ -44,42 +36,48 @@ class OptionsBar extends Component{
   }
 }
 
-function calculateLeftMargin(desiredRightMargin){
-  return width - ADD_BUTTON_LEFT_MARGIN - ADD_BUTTON_DIAMETER - ROUTE_BUTTON_DIAMTER - desiredRightMargin;
-}
 
 const styles = StyleSheet.create({
   container:{
-    // flex: 1,
-    position: 'absolute',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#39416B',
-    height: 80,
-    width: Dimensions.get('window').width,
-    bottom: 0,
-    // justifyContent: 'center',
+    position:             'absolute',
+    bottom:               0,
+    flexDirection:        'row',
+    alignItems:           'center',
+    backgroundColor:      '#39416B',
+    height:               80,
+    width:                Dimensions.get('window').width,
+    borderTopLeftRadius:  5,
+    borderTopRightRadius: 5,
   },
   textContainer: {
-    flexDirection: 'row',
-    paddingLeft: TEXT_LEFT_MARGIN,
+    flexDirection:        'row',
+    alignItems:           'center',
+    justifyContent:       'center',
+    width:                '60%',
+    height:               '100%'
   },
   etaText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white'
+    fontSize:             16,
+    fontWeight:           'bold',
+    color:                'white'
   },
   distanceText: {
-    fontSize: 16,
-    color: 'white'
+    fontSize:             16,
+    color:                'white'
   },
   addButtonContainer:{
-    // flex: 1,
-    paddingLeft: ADD_BUTTON_LEFT_MARGIN,
+    flexDirection:        'column',
+    width:                '20%',
+    height:               '100%',
+    alignItems:           'center',
+    justifyContent:       'center',
   },
   routeButtonContainer:{
-    paddingLeft: 30
-      // alignSelf: 'right'
+    flexDirection:        'column',
+    width:                '20%',
+    height:               '100%',
+    alignItems:           'center',
+    justifyContent:       'center',
   },
 })
 export default OptionsBar;

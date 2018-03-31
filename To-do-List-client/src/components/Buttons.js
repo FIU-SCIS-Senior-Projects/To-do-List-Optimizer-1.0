@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from 'react-native';
 
 import FontAwesome, { Icons } from 'react-native-fontawesome';
@@ -12,9 +13,9 @@ import FontAwesome, { Icons } from 'react-native-fontawesome';
 * CONSTANTS
 ******************************************************************************/
 
-BIG_BUTTON_DIAMETER = 70;
-SMALL_BUTTON_DIAMETER = 50;
-
+BIG_BUTTON_DIAMETER = 60;
+SMALL_BUTTON_DIAMETER = 40;
+IMAGE_DIMENSIONS = 50;
 /******************************************************************************
 * NAVIGATION BUTTON
 ******************************************************************************/
@@ -28,10 +29,13 @@ export class NavigationButton extends Component {
     return(
       <TouchableOpacity
         style={[styles.roundButton,
-                styles.navigationButton,
-                this.props.navigating? styles.navigationStarted: styles.navigationNotStarted]}
+                styles.navigationButton]}
         onPress={() => this.props.onPress()}>
-        <Text style={styles.text}>{this.props.navigating? "MAP" : "START"}</Text>
+        <Image
+          style       = { styles.image}
+          resizeMode  = "contain"
+          source      = { require('../assets/icons/map_icon.png')}>
+        </Image>
       </TouchableOpacity>
     );
   }
@@ -88,16 +92,15 @@ const styles = StyleSheet.create({
     width: BIG_BUTTON_DIAMETER,
     height: BIG_BUTTON_DIAMETER,
     borderRadius: BIG_BUTTON_DIAMETER/2,
-  },
-  navigationNotStarted:{
     backgroundColor: '#3EFF8E',
-  },
-  navigationStarted:{
-    backgroundColor: '#57B0D8',
   },
   text:{
     fontSize: 18,
     color: 'black',
     fontWeight: '100',
   },
+  image: {
+    width:              IMAGE_DIMENSIONS,
+    height:             IMAGE_DIMENSIONS,
+  }
 })
