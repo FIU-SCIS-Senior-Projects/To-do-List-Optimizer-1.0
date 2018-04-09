@@ -30,7 +30,7 @@ class MapContainer extends Component{
   }
 
 
-  componentWillMount(){
+  componentDidMount(){
     // We want to update the user location everytime it changes so we can update
     // the route
     this.watchId = navigator.geolocation.getCurrentPosition(
@@ -49,13 +49,14 @@ class MapContainer extends Component{
       // (error) => this.setState({ error: error.message }),
       // { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-
   }
+
   componentDidUpdate(){
     if (this.state.arrived) {
       this.handleArrivedToPlace();
     }
   }
+
   componentWillUnmount() {
     // When component gets unmounted clear the watch on the user.
     navigator.geolocation.clearWatch(this.watchId);

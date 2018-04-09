@@ -42,13 +42,10 @@ class MapForm extends Component {
 
     // Binding functions
     this.onMapDrag        = this.onMapDrag.bind(this);
-    this.getNextManeuver  = this.getNextManeuver.bind(this);
   }
 
   render() {
     let {map} = this.props;
-
-
 
     return (
       <View style={styles.container}>
@@ -167,24 +164,6 @@ class MapForm extends Component {
           };
         });
     }
-  }
-
-
-  /**
-   * Gets the next maneuver to be perform while navigating
-   * @return {String} - The next maneuver text that is going to be displayed
-   */
-  getNextManeuver(currentLeg){
-    let {steps} = currentLeg;
-      if(steps){
-        for (var i = 0; i < steps.length; i++) {
-          if (steps[i].maneuver) {
-            return steps[i].maneuver;
-          }
-        }
-      }
-      return ''
-
   }
 }
 

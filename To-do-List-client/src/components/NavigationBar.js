@@ -27,10 +27,6 @@ const styles = StyleSheet.create({
 
 export default class Navigationbar extends Component {
 
-  // constructor(props) {
-  //   super(props)
-  // }
-
   _renderLeft() {
       return (
         <TouchableOpacity
