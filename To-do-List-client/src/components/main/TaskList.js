@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import { Header } from 'react-navigation';
-
+import CheckBox from '../List/CheckBox'
 
 const {width, height} = Dimensions.get('window');
 
@@ -33,9 +33,13 @@ class TaskList extends React.PureComponent {
 
   _renderItem = ({item}) => (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        {item.description}
-      </Text>
+      <CheckBox
+        style     = {{width: '80%'}}
+        checked   = {false}
+        label     = {item.description}
+        onChange  = {(checked, entity) => console.log(entity)}
+        entity    = {item}
+      />
     </View>
 
   );
@@ -57,7 +61,10 @@ class TaskList extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
-    height: 20,
+    flexDirection:    'row',
+    justifyContent:   "center",
+    alignItems:       "center",
+    width:            width,
   },
   text: {
     fontSize: 16,

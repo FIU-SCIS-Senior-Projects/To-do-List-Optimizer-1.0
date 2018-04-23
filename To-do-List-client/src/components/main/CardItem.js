@@ -73,7 +73,7 @@ class CardItem extends React.PureComponent {
               </Text>
             </View>
           </TouchableWithoutFeedback>
-          <View style={{flex: 2, flexDirection: 'column', alignItems: 'center'}}>
+          <View style={{flex: 8, flexDirection: 'column', alignItems: 'center'}}>
               <TaskList tasks={this.props.tasks}/>
             </View>
           </View>
