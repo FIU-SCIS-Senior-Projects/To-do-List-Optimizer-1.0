@@ -103,7 +103,7 @@ class ControlBar extends Component {
       <View style={setupStyles.container}>
         {/* Top Part of the Control Bar: Contains start and destination */}
         <View style={setupStyles.topSectionContainer}>
-          <Text style={styles.boldText}>To {this.props.destination.name}</Text>
+          <Text style={styles.boldText}>Last Place: {this.props.destination.name}</Text>
           <Text style={styles.normalText}>From {this.props.currentLocation}</Text>
         </View>
 
