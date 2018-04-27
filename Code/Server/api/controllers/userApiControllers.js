@@ -59,17 +59,39 @@ exports.addUser = (req, res) => {
   * GET: Search for user using email Login
   =======================================*/
   exports.login = (req, res) => {
-    var email = req.body.email;
-    User.find({email}, (err, user) =>{
+
+
+    myConsole("Attemted login by: " + req.body.email);
+
+    User.findOne({email: req.body.email}, (err, user) =>{
       if(err){
-        res.send(err);
+        return res.status(500).send('Error on the server.');
       }
-      if(user.length == 0){
-        res.send("User not found");
+      if(!user){
+        myConsole("Unsuccessful login by: " + req.body.email);
+        return res.status(404).send('No user found.');
       }
-      res.send(user);
-    })
+      var validPassword = bcrypt.compareSync(req.body.password, user.password);
+      if (!validPassword) {
+        myConsole("Unsuccessful login by: " + req.body.email);
+        return res.status(401).send({ auth: false, token: null });
+      }
+      var token = jwt.sign(
+        {id: user._id},
+        config.secret,
+        {expiresIn: ONE_MONTH}
+      );
+      myConsole("Successful login by: " + req.body.email);
+      res.status(200).send({ auth: true, token: token });
+    });
   };
+
+  /*=======================================
+  * GET: Logout from server
+  =======================================*/
+  exports.logout = (req, res) => {
+    res.status(200).send({ auth: false, token: null });
+  }
 
   /*=======================================
   * GET: Returns all the users

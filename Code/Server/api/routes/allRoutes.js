@@ -19,6 +19,7 @@ module.exports = function(app){
 =============================================================================*/
     app.route('/signup').post(user.addUser);
     app.route('/signin').post(user.login);
+    app.route('/signout').get(user.logout);
     app.route('/user/display_all').get(user.listAllUsers);
     app.route('/user/update/:userId').put(user.updateUser);
     app.route('/user/delete/:userId').delete(user.deleteUser);

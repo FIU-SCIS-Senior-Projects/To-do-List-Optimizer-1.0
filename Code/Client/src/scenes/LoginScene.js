@@ -129,7 +129,6 @@ class LoginScene extends Component {
       Alert.alert( ' No username or password');
       return;
     }
-    // TODO: localhost doesn't work because the app is running inside an emulator. Get the IP address with ifconfig.
     fetch('http://localhost:8000/signup', {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
@@ -149,12 +148,51 @@ class LoginScene extends Component {
   }
 
   /**
-   * authenticate a registered user with the entered username and pasword.
-   * Expects a success token and stores it to make further requests.
-   * @return {[type]} [description]
-   */
+  * authenticate a registered user with the entered username and pasword.
+  * Expects a success token and stores it to make further requests.
+  * @return {[type]} [description]
+  */
   userLogin() {
-    Actions.main();
+    if (!this.state.username || !this.state.password){
+      Alert.alert( ' No username or password');
+      return;
+    }
+    try {
+      fetch('http://localhost:8000/signin', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: this.state.username,
+          password: this.state.password,
+        })
+      })
+      .then((response) => {
+
+        response.json();
+
+
+        if (response.status == 200){
+
+          var body = JSON.parse(response._bodyInit);
+          console.log("saved token: " + body.token);
+          this.saveItem('id_token', body.token);
+          Alert.alert('Login Success!');
+          Actions.main();
+        }
+        else if (response.status == 404 || response.status == 401) {
+          console.log("response status: "response.status);
+          Alert.alert('wrong username or password');
+        }
+        else {
+          console.log("response status: "response.status);
+          Alert.alert('something went wrong');
+        }
+      })
+      .done();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
   async saveItem(item, selectedValue) {
