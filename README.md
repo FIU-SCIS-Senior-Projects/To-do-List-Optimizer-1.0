@@ -4,7 +4,7 @@ This is a software-engineering project, lead by Dr. Ross from SCIS.   The idea i
 
 
 
-## Getting Started
+# Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 git clone https://github.com/FIU-SCIS-Senior-Projects/To-do-List-Optimizer-1.0.git
 ```
 
-### Prerequisites
+## Prerequisites
 This system was developed and tested using Mac OS. The instructions below are
 meant to be used in Mac OS.
 Some tools are required to work on the app.
@@ -24,12 +24,12 @@ Some tools are required to work on the app.
   * react native cli
   * yarn
 
-# Installing Xcode
+### Installing Xcode
 
   Installing Xcode is simple. Go to the app store and in the search bar type Xcode. When the result
   pops, press install.
 
-# Installing Brew
+### Installing Brew
 In order to install node you are going to need to install brew in your mac.
 
 ```
@@ -37,7 +37,7 @@ In order to install node you are going to need to install brew in your mac.
 ```
 Once brew is install we can go ahead and install node and yarn
 
-# Installing Node
+### Installing Node
 ```
 brew install node
 ```
@@ -49,13 +49,13 @@ compatibility issues with React Native
 npm install -g npm@4.6.1
 ```
 
-# Installing yarn
+### Installing yarn
 
 ```
 brew install yarn
 ```
 
-# Installing watchman
+### Installing watchman
 
 Watchman is a tool by Facebook for watching changes in the filesystem. It is highly recommended you install it for better performance.
 
@@ -63,7 +63,7 @@ Watchman is a tool by Facebook for watching changes in the filesystem. It is hig
 brew install watchman
 ```
 
-# Installing react native cli
+### Installing react native cli
 Node comes with npm, which lets you install the React Native command line interface.
 
 ```
@@ -71,9 +71,9 @@ npm install -g react-native-cli
 ```
 
 
-### Installing
+# Installing App
 
-# Installing Client
+### Installing Client
 From the root directory move to the client folder to install the dependencies.
 
 ```
@@ -99,7 +99,7 @@ run:
 react-native run-ios
 ```
 
-# Installing Server
+### Installing Server
 From the root directory move to the client folder to install the dependencies.
 
 ```
