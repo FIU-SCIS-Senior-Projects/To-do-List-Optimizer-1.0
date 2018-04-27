@@ -147,6 +147,9 @@ class LoginScene extends Component {
     .done();
   }
 
+
+  
+
   /**
   * authenticate a registered user with the entered username and pasword.
   * Expects a success token and stores it to make further requests.
@@ -180,11 +183,11 @@ class LoginScene extends Component {
           Actions.main();
         }
         else if (response.status == 404 || response.status == 401) {
-          console.log("response status: "response.status);
+          console.log("response status: " + response.status);
           Alert.alert('wrong username or password');
         }
         else {
-          console.log("response status: "response.status);
+          console.log("response status: " + response.status);
           Alert.alert('something went wrong');
         }
       })

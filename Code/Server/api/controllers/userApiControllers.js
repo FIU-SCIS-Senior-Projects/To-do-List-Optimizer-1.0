@@ -19,7 +19,7 @@ var myConsole = (DEBUG)? console.log : function(){};
 =======================================*/
 exports.addUser = (req, res) => {
 
-  myConsole()
+  
   var hashedPass = bcrypt.hashSync(req.body.password, 8);
 
   myConsole("email: " + req.body.email + "hashed password: " + hashedPass + "\n");
