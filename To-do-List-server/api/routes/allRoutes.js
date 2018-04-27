@@ -18,7 +18,7 @@ module.exports = function(app){
  *                   information for that user.
 =============================================================================*/
     app.route('/signup').post(user.addUser);
-    app.route('/login').post(user.login);
+    app.route('/signin').post(user.login);
     app.route('/user/display_all').get(user.listAllUsers);
     app.route('/user/update/:userId').put(user.updateUser);
     app.route('/user/delete/:userId').delete(user.deleteUser);

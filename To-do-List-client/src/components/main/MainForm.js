@@ -23,9 +23,7 @@ class MainForm extends Component {
     Alert.alert('We will print a Chuck Norris quote')
   }
 
-  userLogout() {
-    Actions.login();
-  }
+
 
 
   render(){
@@ -43,10 +41,10 @@ class MainForm extends Component {
             this.props.addErrand();
           }
         }/>
-        <RoundButton
+        {/* <RoundButton
           diameter={75}
           onPress={this.userLogout.bind(this)}
-        />
+        /> */}
       </View>)
     }
 

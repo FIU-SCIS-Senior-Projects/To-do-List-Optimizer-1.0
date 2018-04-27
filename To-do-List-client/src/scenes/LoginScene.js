@@ -118,6 +118,12 @@ class LoginScene extends Component {
     );
   }
 
+  /****************************************************************************
+  * create a request to create a new user with the entered
+  * username and Password. expects a success token and stores it to
+  * make further requests.
+  * @return {void} [description]
+  */
   userSignup() {
     if (!this.state.username || !this.state.password) {
       Alert.alert( ' No username or password');
@@ -142,6 +148,11 @@ class LoginScene extends Component {
     .done();
   }
 
+  /**
+   * authenticate a registered user with the entered username and pasword.
+   * Expects a success token and stores it to make further requests.
+   * @return {[type]} [description]
+   */
   userLogin() {
     Actions.main();
   }

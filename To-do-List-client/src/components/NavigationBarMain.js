@@ -25,11 +25,14 @@ export default class Navigationbar extends Component {
   // constructor(props) {
   //   super(props)
   // }
+  userLogout() {
+    Actions.login();
+  }
 
   _renderLeft() {
       return (
         <TouchableOpacity
-          onPress={() => console.log('Hamburger button pressed')}
+          onPress={this.userLogout.bind(this)}
           style={[styles.navBarItem, { paddingLeft: 10}]}>
           <Image
             style={{width: 25, height: 45}}
