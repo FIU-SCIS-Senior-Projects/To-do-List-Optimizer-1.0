@@ -197,7 +197,6 @@ $RECYCLE.BIN/
 *.class
 
 # Generated files
-bin/
 gen/
 out/
 
