@@ -29,7 +29,7 @@ console.log("*************************************************");
 console.log('RESTful API Started on: ' + port);
 
 app.get('*', function(req, res){
-  res.send('Page not found!!!', 404);
+  res.status(404).send('Page not found!!!');
 });
 
 module.exports = app;
