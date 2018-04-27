@@ -113,3 +113,9 @@ Code/Server/api
 controllers directory: Contains the user, place and task controllers.
 models directory: It holds the different schemas of the database.
 routes directory: It holds all the routes to use the restful API.
+
+/*******************************************************************************
+* OTHER TOOLS
+*******************************************************************************/
+
+The app uses yarn as the package manager.
