@@ -9,7 +9,7 @@
     Picker
   } from 'react-native';
 
-  import {FormLabel, FormInput} from 'react-native-elements';
+  import {Input} from 'react-native-elements';
   import {Actions} from 'react-native-router-flux';
 
   const DEBUG = true;
@@ -37,7 +37,7 @@
       return(
 
         <View>
-          <FormInput placeholder="where to"
+          <Input placeholder="where to"
             onChangeText={(text) => {this.props.onChange(text)}}/>
             <ListView  dataSource={dataSource}
               renderRow={(rowData) =>

@@ -44,7 +44,7 @@ export default class App extends Component{
             hideNavBar
           >
           <Stack key='root'>
-            <Scene key='login' initial={true} component={LoginScene} title='Login' direction="vertical"/>
+            <Scene key='login' initial={true} hideNavBar={true} component={LoginScene} title='Login' direction="vertical"/>
             {/* <Drawer
               hideNavBar
               key="drawer"
