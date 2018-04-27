@@ -20,6 +20,7 @@ Some tools are required to work on the app.
   * Xcode
   * brew
   * node
+  * nodemon
   * watchman
   * react native cli
   * yarn
@@ -47,6 +48,13 @@ compatibility issues with React Native
 
 ```
 npm install -g npm@4.6.1
+```
+
+### Installing nodemon
+
+Nodemon is used to run the server
+```
+npm install -g nodemon
 ```
 
 ### Installing yarn
@@ -115,12 +123,13 @@ npm install
 Now all the client dependencies should be Install. In order to run the server run:
 
 ```
-react-native run-ios
+nodemon
 ```
 
 ## Built With
 
 * [React Native](https://facebook.github.io/react-native/) - The mobile framework used
+* [Npm](https://www.npmjs.com/) - Dependency Management
 * [Yarn](https://yarnpkg.com/en/) - Dependency Management
 * [Express](https://expressjs.com) - Used in the server for the restful API
 
