@@ -19,9 +19,16 @@ class MainForm extends Component {
     this.populatedListView = this.populatedListView.bind(this);
   }
 
+  getProtectedQuote() {
+    Alert.alert('We will print a Chuck Norris quote')
+  }
+
+
+
+
   render(){
     return(
-        !this.props.populated ? this.emptyListView() : this.populatedListView()
+      !this.props.populated ? this.emptyListView() : this.populatedListView()
     );
   }
 
@@ -29,17 +36,21 @@ class MainForm extends Component {
     return (
       <View style={[styles.container, styles.emptyContainer]}>
         <RoundButton
-        diameter={75}
-        onPress = {()=>{
+          diameter={75}
+          onPress = {()=>{
             this.props.addErrand();
-            }
-          }/>
+          }
+        }/>
+        {/* <RoundButton
+          diameter={75}
+          onPress={this.userLogout.bind(this)}
+        /> */}
       </View>)
-  }
+    }
 
-  populatedListView(){
-    return (
-      <View style={[styles.container, styles.populatedContainer]}>
+    populatedListView(){
+      return (
+        <View style={[styles.container, styles.populatedContainer]}>
           <ErrandsList order={this.props.order} errands={this.props.errands}/>
           <OptionsBar
             eta={this.props.eta}
@@ -47,28 +58,28 @@ class MainForm extends Component {
             addErrand={this.props.addErrand}
             map={this.props.map}/>
 
-      </View>
-    )
-  }
+          </View>
+        )
+      }
 
-}
+    }
 
 
 
-const styles = StyleSheet.create({
-  container:{
-    ...StyleSheet.absoluteFillObject,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    backgroundColor:'#54C4C8',
-  },
-  emptyContainer: {
-    alignItems: 'center',
-  },
-  populatedContainer: {
-    alignContent: 'flex-end'
-  }
+    const styles = StyleSheet.create({
+      container:{
+        ...StyleSheet.absoluteFillObject,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        backgroundColor:'#54C4C8',
+      },
+      emptyContainer: {
+        alignItems: 'center',
+      },
+      populatedContainer: {
+        alignContent: 'flex-end'
+      }
 
-});
+    });
 
-export default MainForm;
+    export default MainForm;

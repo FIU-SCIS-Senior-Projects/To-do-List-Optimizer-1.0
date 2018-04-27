@@ -4,27 +4,31 @@ var mongoose = require('mongoose'),
     User     = mongoose.model('User'),
     Place    = mongoose.model('Place'),
     Task   = mongoose.model('Task');
+var auth = require('./authenticate');
 
 
 /*=======================================
 * POST: Adds a new place
 =======================================*/
 exports.addPlace = (req, res) => {
-    User.findById(req.params.userId, (err, user)=>{
+
+
+  auth(req, res, User.findById(id, (err, user)=>{
         if(err){
           res.send(err)
         }
         else{
             var place = new Place({
                 name : req.body.name,
-                author : req.params.userId
+                author : id
             });
             place.save((err, place) =>{
               if(err) {res.send(err) }
               else{ res.json(place); }
             });
           }
-    });
+    })
+  );
 }
 /*=======================================
     * GET: display_all places for an user
@@ -66,6 +70,16 @@ exports.deletePlace = (req, res) => {
     }
   });
 }
+
+
+
+
+
+
+
+
+
+
 
 // /*=======================================
 //     * GET: Finds a place

@@ -235,8 +235,8 @@ class MainContainer extends Component{
   }
 
   componentWillUnmount() {
-     navigator.geolocation.clearWatch(this.watchId);
-   }
+    navigator.geolocation.clearWatch(this.watchId);
+  }
 
   componentDidUpdate(){
 
@@ -248,6 +248,10 @@ class MainContainer extends Component{
       this.handleRoute();
     }
   }
+
+
+
+
   render(){
     return(
       <MainForm
@@ -259,49 +263,49 @@ class MainContainer extends Component{
         order={this.props.map.route.waypoint_order}
         navigating={this.props.map.navigating}/>
 
-    );
+      );
+    }
+
+
+    handleAddErrand(){
+      this.state.places.forEach((place) => {
+        this.props.Actions.addPlace(place);
+      })
+
+      this.state.tasks.forEach((place) => {
+        this.props.Actions.addTask(place);
+      })
+
+      this.setState((prev) =>{
+        return {...prev, updated: false}
+      })
+      Actions.entry();
+    }
+
+    handleRoute() {
+      this.props.Actions.getRouteRequested();
+      this.props.Actions.getRoute(this.props.user.location.coords , this.props.errands.places, true);
+    }
+
+    handleMap(){
+      this.props.Actions.overview();
+      Actions.map();
+    }
   }
 
 
-  handleAddErrand(){
-    this.state.places.forEach((place) => {
-      this.props.Actions.addPlace(place);
-    })
-
-    this.state.tasks.forEach((place) => {
-      this.props.Actions.addTask(place);
-    })
-
-    this.setState((prev) =>{
-      return {...prev, updated: false}
-    })
-    Actions.entry();
+  function mapStateToProps(state) {
+    return {
+      errands: state.errands,
+      user: state.user,
+      map: state.map
+    };
   }
 
-  handleRoute() {
-    this.props.Actions.getRouteRequested();
-    this.props.Actions.getRoute(this.props.user.location.coords , this.props.errands.places, true);
+  function mapDispatchToProps(dispatch) {
+    return {
+      Actions: bindActionCreators(ActionCreators, dispatch),
+    };
   }
 
-  handleMap(){
-    this.props.Actions.overview();
-    Actions.map();
-  }
-}
-
-
-function mapStateToProps(state) {
-  return {
-    errands: state.errands,
-    user: state.user,
-    map: state.map
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    Actions: bindActionCreators(ActionCreators, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
+  export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);
